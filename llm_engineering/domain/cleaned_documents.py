@@ -16,8 +16,10 @@ class CleanedTranscriptionDocument(CleanedDocument):
     name: str
     filepath: str
 
-    class Settings:
-        name = DataCategory.MEETING_TRANSCRIPTION
+    class Config:
+        name = "cleaned_transcription"
+        category = DataCategory.MEETING_TRANSCRIPTION
+        use_vector_index = False
 
 
 class CleanedMLBookDocument(CleanedDocument):
@@ -25,5 +27,7 @@ class CleanedMLBookDocument(CleanedDocument):
     name: str
     author: str
 
-    class Settings:
-        name = DataCategory.ML_BOOK
+    class Config:
+        name = "cleaned_ml_book"
+        category = DataCategory.ML_BOOK
+        use_vector_index = False
