@@ -10,49 +10,20 @@ from .types import DataCategory
 class CleanedDocument(VectorBaseDocument, ABC):
     content: str
     platform: str
-    author_id: UUID4
-    author_full_name: str
 
 
 class CleanedTranscriptionDocument(CleanedDocument):
     name: str
-    link: str
+    filepath: str
 
     class Settings:
         name = DataCategory.MEETING_TRANSCRIPTION
 
 
 class CleanedMLBookDocument(CleanedDocument):
+    filepath: str
     name: str
     author: str
 
     class Settings:
         name = DataCategory.ML_BOOK
-
-
-class CleanedPostDocument(CleanedDocument):
-    image: Optional[str] = None
-
-    class Config:
-        name = "cleaned_posts"
-        category = DataCategory.POSTS
-        use_vector_index = False
-
-
-class CleanedArticleDocument(CleanedDocument):
-    link: str
-
-    class Config:
-        name = "cleaned_articles"
-        category = DataCategory.ARTICLES
-        use_vector_index = False
-
-
-class CleanedRepositoryDocument(CleanedDocument):
-    name: str
-    link: str
-
-    class Config:
-        name = "cleaned_repositories"
-        category = DataCategory.REPOSITORIES
-        use_vector_index = False

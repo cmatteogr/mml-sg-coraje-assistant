@@ -1,15 +1,15 @@
 from loguru import logger
-import shutil
 from .base import BaseLocalCrawler
 import os
 from llm_engineering.domain.documents import TranscriptionDocument
+from pathlib import Path
 
 
 class TranscriptionCrawler(BaseLocalCrawler):
     model = TranscriptionDocument
 
     def extract(self, link: str, **kwargs) -> None:
-        book_name = os.path.basename(link).split('.')[0]
+        book_name = Path(os.path.basename(link)).stem
         logger.info(f"Starting scrapping data for Meeting Transcription: {link}")
 
         old_model = self.model.find(name=link)

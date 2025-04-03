@@ -4,13 +4,13 @@ from langchain_community.document_loaders import AsyncHtmlLoader
 from langchain_community.document_transformers.html2text import Html2TextTransformer
 from loguru import logger
 
-from llm_engineering.domain.documents import ArticleDocument
+from llm_engineering.domain.documents import MLBookDocument
 
 from .base import BaseCrawler
 
 
 class CustomArticleCrawler(BaseCrawler):
-    model = ArticleDocument
+    model = MLBookDocument
 
     def __init__(self) -> None:
         super().__init__()

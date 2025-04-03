@@ -1,9 +1,9 @@
 from loguru import logger
-import shutil
 from .base import BaseLocalCrawler
 import os
 import fitz
 from llm_engineering.domain.documents import MLBookDocument
+from pathlib import Path
 
 
 
@@ -11,7 +11,7 @@ class MLBookCrawler(BaseLocalCrawler):
     model = MLBookDocument
 
     def extract(self, link: str, **kwargs) -> None:
-        book_name = os.path.basename(link).split('.')[0]
+        book_name = Path(os.path.basename(link)).stem
         logger.info(f"Starting scrapping data for ML Books: {link}")
 
         old_model = self.model.find(name=book_name)

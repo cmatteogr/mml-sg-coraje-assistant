@@ -4,16 +4,14 @@ from llm_engineering.domain.base import NoSQLBaseDocument, VectorBaseDocument
 from llm_engineering.domain.types import DataCategory
 
 from .chunking_data_handlers import (
-    ArticleChunkingHandler,
     ChunkingDataHandler,
-    PostChunkingHandler,
-    RepositoryChunkingHandler,
+    MLBookChunkingHandler,
+    TranscriptionChunkingHandler
 )
 from .cleaning_data_handlers import (
-    ArticleCleaningHandler,
     CleaningDataHandler,
-    PostCleaningHandler,
-    RepositoryCleaningHandler,
+    MLBookCleaningHandler,
+    TranscriptionCleaningHandler
 )
 from .embedding_data_handlers import (
     ArticleEmbeddingHandler,
@@ -27,12 +25,10 @@ from .embedding_data_handlers import (
 class CleaningHandlerFactory:
     @staticmethod
     def create_handler(data_category: DataCategory) -> CleaningDataHandler:
-        if data_category == DataCategory.POSTS:
-            return PostCleaningHandler()
-        elif data_category == DataCategory.ARTICLES:
-            return ArticleCleaningHandler()
-        elif data_category == DataCategory.REPOSITORIES:
-            return RepositoryCleaningHandler()
+        if data_category == DataCategory.ML_BOOK:
+            return MLBookCleaningHandler()
+        elif data_category == DataCategory.MEETING_TRANSCRIPTION:
+            return TranscriptionCleaningHandler()
         else:
             raise ValueError("Unsupported data type")
 
@@ -58,12 +54,10 @@ class CleaningDispatcher:
 class ChunkingHandlerFactory:
     @staticmethod
     def create_handler(data_category: DataCategory) -> ChunkingDataHandler:
-        if data_category == DataCategory.POSTS:
-            return PostChunkingHandler()
-        elif data_category == DataCategory.ARTICLES:
-            return ArticleChunkingHandler()
-        elif data_category == DataCategory.REPOSITORIES:
-            return RepositoryChunkingHandler()
+        if data_category == DataCategory.ML_BOOK:
+            return MLBookChunkingHandler()
+        elif data_category == DataCategory.MEETING_TRANSCRIPTION:
+            return TranscriptionChunkingHandler()
         else:
             raise ValueError("Unsupported data type")
 
