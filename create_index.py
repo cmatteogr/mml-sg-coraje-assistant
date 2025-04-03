@@ -41,7 +41,6 @@ if __name__ == "__main__":
     for meeting_data in index_data:
         print(f"create index for {meeting_data['original_title']}")
         index_n = meeting_data['original_title'].split('.')[0].strip()
-        #new_filename = f"{index_n}. {meeting_data['new_title']}"
         new_filename = f"{index_n}"
         o_index_data_file_path = os.path.join(INPUT_DIRECTORY, f"meetings_transcriptions_{input_type}", f"{meeting_data['original_title']}.{input_type}")
 

@@ -3,7 +3,6 @@ from langchain.chains import RetrievalQA
 from langchain.chains.llm import LLMChain
 from langchain.chains.combine_documents.stuff import StuffDocumentsChain
 from langchain.prompts import PromptTemplate
-from langchain_community.embeddings import HuggingFaceEmbeddings
 
 class LangchainRepository:
 
