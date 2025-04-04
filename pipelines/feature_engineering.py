@@ -3,7 +3,7 @@ from zenml import pipeline
 from steps import feature_engineering as fe_steps
 
 
-@pipeline
+@pipeline(enable_cache=False)
 def feature_engineering(ml_book_names: list[str], transcription_names: list[str], wait_for: str | list[str] | None = None) -> list[str]:
     raw_documents = fe_steps.query_data_warehouse(ml_book_names, transcription_names, after=wait_for)
 

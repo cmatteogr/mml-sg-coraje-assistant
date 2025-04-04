@@ -51,7 +51,7 @@ def _add_to_metadata(metadata: dict, domain: str, successfull_crawl: bool) -> di
     return metadata
 
 
-links = [
+"""links = [
     ('ml_books', 'A Practical Outlier Detection Approach for Mixed Attibute Data.pdf'),
     ('ml_books', 'Bagging Predictors.pdf'),
     ('ml_books', 'Daily Dose Of Data Science Full Archive.pdf'),
@@ -66,4 +66,4 @@ links = [
     ('transcription', '4. Construcción del Modelo de Predicción - Supervised Learning (2024-03-13 19_07 GMT-5).txt'),
     ('transcription', '5. Supervised Learning - Optimización del Modelo (2024-04-10 19_11 GMT-5).txt')
 ]
-crawl_links(links)
+crawl_links(links)"""
