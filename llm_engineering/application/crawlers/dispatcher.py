@@ -1,8 +1,3 @@
-import re
-from urllib.parse import urlparse
-
-from loguru import logger
-
 from .base import BaseCrawler
 from .custom_article import CustomArticleCrawler
 from .ml_book import MLBookCrawler

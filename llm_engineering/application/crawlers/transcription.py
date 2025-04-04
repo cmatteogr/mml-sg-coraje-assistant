@@ -1,4 +1,5 @@
 from loguru import logger
+
 from .base import BaseLocalCrawler
 import os
 from llm_engineering.domain.documents import TranscriptionDocument
@@ -9,10 +10,10 @@ class TranscriptionCrawler(BaseLocalCrawler):
     model = TranscriptionDocument
 
     def extract(self, link: str, **kwargs) -> None:
-        book_name = Path(os.path.basename(link)).stem
+        transcription_name = Path(os.path.basename(link)).stem
         logger.info(f"Starting scrapping data for Meeting Transcription: {link}")
 
-        old_model = self.model.find(name=link)
+        old_model = self.model.find(name=transcription_name)
         if old_model is not None:
             logger.info(f"Transcription already exists in the database: {link}")
             return
@@ -26,9 +27,9 @@ class TranscriptionCrawler(BaseLocalCrawler):
         transcription = self._extract_transcription(destination_path)
         logger.info(f"Found {len(transcription)} meeting transcription for: {link}")
 
-        content = {book_name: transcription}
+        content = {transcription_name: transcription}
         # save new book
-        instance = self.model(platform="transcription", content=content, name=book_name,
+        instance = self.model(platform="transcription", content=content, name=transcription_name,
                               filepath=destination_path)
         instance.save()
 

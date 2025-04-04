@@ -3,7 +3,6 @@ from loguru import logger
 from tqdm import tqdm
 from typing_extensions import Annotated
 from zenml import get_step_context, step
-
 from llm_engineering.application.crawlers.dispatcher import CrawlerDispatcher
 
 
@@ -50,6 +49,7 @@ def _add_to_metadata(metadata: dict, domain: str, successfull_crawl: bool) -> di
     metadata[domain]["total"] = metadata.get(domain, {}).get("total", 0) + 1
 
     return metadata
+
 
 links = [
     ('ml_books', 'A Practical Outlier Detection Approach for Mixed Attibute Data.pdf'),
