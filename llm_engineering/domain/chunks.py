@@ -11,44 +11,21 @@ class Chunk(VectorBaseDocument, ABC):
     content: str
     platform: str
     document_id: UUID4
-    author_id: UUID4
-    author_full_name: str
     metadata: dict = Field(default_factory=dict)
 
 
 class TranscriptionChunk(Chunk):
     name: str
-    link: str
+    filepath: str
 
-    class Settings:
-        name = DataCategory.MEETING_TRANSCRIPTION
+    class Config:
+        category = DataCategory.MEETING_TRANSCRIPTION
 
 
 class MLBookChunk(Chunk):
+    filepath: str
     name: str
     author: str
 
-    class Settings:
-        name = DataCategory.ML_BOOK
-
-
-class PostChunk(Chunk):
-    image: Optional[str] = None
-
     class Config:
-        category = DataCategory.POSTS
-
-
-class ArticleChunk(Chunk):
-    link: str
-
-    class Config:
-        category = DataCategory.ARTICLES
-
-
-class RepositoryChunk(Chunk):
-    name: str
-    link: str
-
-    class Config:
-        category = DataCategory.REPOSITORIES
+        category = DataCategory.ML_BOOK

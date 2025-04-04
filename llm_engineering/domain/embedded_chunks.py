@@ -12,8 +12,6 @@ class EmbeddedChunk(VectorBaseDocument, ABC):
     embedding: list[float] | None
     platform: str
     document_id: UUID4
-    author_id: UUID4
-    author_full_name: str
     metadata: dict = Field(default_factory=dict)
 
     @classmethod
@@ -33,7 +31,7 @@ class EmbeddedChunk(VectorBaseDocument, ABC):
 
 class EmbeddedTranscriptionChunk(EmbeddedChunk):
     name: str
-    link: str
+    filepath: str
 
     class Config:
         name = "embedded_transcription"
@@ -42,36 +40,11 @@ class EmbeddedTranscriptionChunk(EmbeddedChunk):
 
 
 class EmbeddedMLBookChunk(EmbeddedChunk):
+    filepath: str
     name: str
     author: str
 
     class Config:
         name = "embedded_ml_book"
         category = DataCategory.ML_BOOK
-        use_vector_index = True
-
-
-class EmbeddedPostChunk(EmbeddedChunk):
-    class Config:
-        name = "embedded_posts"
-        category = DataCategory.POSTS
-        use_vector_index = True
-
-
-class EmbeddedArticleChunk(EmbeddedChunk):
-    link: str
-
-    class Config:
-        name = "embedded_articles"
-        category = DataCategory.ARTICLES
-        use_vector_index = True
-
-
-class EmbeddedRepositoryChunk(EmbeddedChunk):
-    name: str
-    link: str
-
-    class Config:
-        name = "embedded_repositories"
-        category = DataCategory.REPOSITORIES
         use_vector_index = True

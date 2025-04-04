@@ -14,11 +14,10 @@ from .cleaning_data_handlers import (
     TranscriptionCleaningHandler
 )
 from .embedding_data_handlers import (
-    ArticleEmbeddingHandler,
     EmbeddingDataHandler,
-    PostEmbeddingHandler,
     QueryEmbeddingHandler,
-    RepositoryEmbeddingHandler,
+    TranscriptionEmbeddingHandler,
+    MLBookEmbeddingHandler
 )
 
 
@@ -85,12 +84,10 @@ class EmbeddingHandlerFactory:
     def create_handler(data_category: DataCategory) -> EmbeddingDataHandler:
         if data_category == DataCategory.QUERIES:
             return QueryEmbeddingHandler()
-        if data_category == DataCategory.POSTS:
-            return PostEmbeddingHandler()
-        elif data_category == DataCategory.ARTICLES:
-            return ArticleEmbeddingHandler()
-        elif data_category == DataCategory.REPOSITORIES:
-            return RepositoryEmbeddingHandler()
+        if data_category == DataCategory.ML_BOOK:
+            return MLBookEmbeddingHandler()
+        elif data_category == DataCategory.MEETING_TRANSCRIPTION:
+            return TranscriptionEmbeddingHandler()
         else:
             raise ValueError("Unsupported data type")
 

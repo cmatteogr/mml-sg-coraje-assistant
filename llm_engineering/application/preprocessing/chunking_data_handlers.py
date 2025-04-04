@@ -3,7 +3,7 @@ from abc import ABC, abstractmethod
 from typing import Generic, TypeVar
 from uuid import UUID
 
-from llm_engineering.domain.chunks import ArticleChunk, Chunk, PostChunk, RepositoryChunk
+from llm_engineering.domain.chunks import Chunk, TranscriptionChunk, MLBookChunk
 from llm_engineering.domain.cleaned_documents import (
     CleanedDocument,
     CleanedTranscriptionDocument,
@@ -42,7 +42,7 @@ class MLBookChunkingHandler(ChunkingDataHandler):
             "chunk_overlap": 25,
         }
 
-    def chunk(self, data_model: CleanedMLBookDocument) -> list[PostChunk]:
+    def chunk(self, data_model: CleanedMLBookDocument) -> list[MLBookChunk]:
         data_models_list = []
 
         cleaned_content = data_model.content
@@ -52,14 +52,14 @@ class MLBookChunkingHandler(ChunkingDataHandler):
 
         for chunk in chunks:
             chunk_id = hashlib.md5(chunk.encode()).hexdigest()
-            model = PostChunk(
+            model = MLBookChunk(
                 id=UUID(chunk_id, version=4),
                 content=chunk,
                 platform=data_model.platform,
                 document_id=data_model.id,
-                author_id=data_model.author_id,
-                author_full_name=data_model.author_full_name,
-                image=data_model.image if data_model.image else None,
+                filepath=data_model.filepath,
+                name=data_model.name,
+                author=data_model.author,
                 metadata=self.metadata,
             )
             data_models_list.append(model)
@@ -76,7 +76,7 @@ class TranscriptionChunkingHandler(ChunkingDataHandler):
             "chunk_overlap": 25,
         }
 
-    def chunk(self, data_model: CleanedTranscriptionDocument) -> list[PostChunk]:
+    def chunk(self, data_model: CleanedTranscriptionDocument) -> list[TranscriptionChunk]:
         data_models_list = []
 
         cleaned_content = data_model.content
@@ -86,14 +86,13 @@ class TranscriptionChunkingHandler(ChunkingDataHandler):
 
         for chunk in chunks:
             chunk_id = hashlib.md5(chunk.encode()).hexdigest()
-            model = PostChunk(
+            model = TranscriptionChunk(
                 id=UUID(chunk_id, version=4),
                 content=chunk,
                 platform=data_model.platform,
                 document_id=data_model.id,
-                author_id=data_model.author_id,
-                author_full_name=data_model.author_full_name,
-                image=data_model.image if data_model.image else None,
+                name=data_model.name,
+                filepath=data_model.filepath,
                 metadata=self.metadata,
             )
             data_models_list.append(model)
