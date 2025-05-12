@@ -7,9 +7,16 @@ from steps import feature_engineering as fe_steps
 def feature_engineering(ml_book_names: list[str], transcription_names: list[str], wait_for: str | list[str] | None = None) -> list[str]:
     raw_documents = fe_steps.query_data_warehouse(ml_book_names, transcription_names, after=wait_for)
 
+    # translate documents
+    # NOTE: Only needed for the Transcriptions
+    translated_documents = fe_steps.translate_documents(raw_documents)
+
+
+    # clean documents
     cleaned_documents = fe_steps.clean_documents(raw_documents)
     last_step_1 = fe_steps.load_to_vector_db(cleaned_documents)
 
+    # get embedded documents
     embedded_documents = fe_steps.chunk_and_embed(cleaned_documents)
     last_step_2 = fe_steps.load_to_vector_db(embedded_documents)
 
