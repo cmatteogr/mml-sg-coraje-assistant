@@ -11,7 +11,6 @@ def feature_engineering(ml_book_names: list[str], transcription_names: list[str]
     # NOTE: Only needed for the Transcriptions
     translated_documents = fe_steps.translate_documents(raw_documents)
 
-
     # clean documents
     cleaned_documents = fe_steps.clean_documents(raw_documents)
     last_step_1 = fe_steps.load_to_vector_db(cleaned_documents)

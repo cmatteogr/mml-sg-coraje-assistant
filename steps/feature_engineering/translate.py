@@ -1,0 +1,32 @@
+from typing_extensions import Annotated
+from zenml import get_step_context, step
+
+from llm_engineering.application.preprocessing import TranslatingDispatcher
+from llm_engineering.domain.translated_documents import TranslatedDocument
+
+
+@step
+def translate_documents(
+    documents: Annotated[list, "raw_documents"],
+) -> Annotated[list, "translated_documents"]:
+    translated_documents = []
+    for document in documents:
+        translated_document = TranslatingDispatcher.dispatch(document)
+        translated_documents.append(translated_document)
+
+    step_context = get_step_context()
+    step_context.add_output_metadata(output_name="translated_documents", metadata=_get_metadata(translated_documents))
+
+    return translated_documents
+
+
+def _get_metadata(translated_documents: list[TranslatedDocument]) -> dict:
+    metadata = {"num_documents": len(translated_documents)}
+    for document in translated_documents:
+        category = document.get_category()
+        if category not in metadata:
+            metadata[category] = {}
+
+        metadata[category]["num_documents"] = metadata[category].get("num_documents", 0) + 1
+
+    return metadata

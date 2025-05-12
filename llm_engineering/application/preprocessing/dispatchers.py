@@ -8,6 +8,11 @@ from .chunking_data_handlers import (
     MLBookChunkingHandler,
     TranscriptionChunkingHandler
 )
+from .translating_data_handlers import (
+    TranslatingDataHandler,
+    MLBookTranslatingHandler,
+    TranscriptionTranslatingHandler
+)
 from .cleaning_data_handlers import (
     CleaningDataHandler,
     MLBookCleaningHandler,
@@ -19,6 +24,35 @@ from .embedding_data_handlers import (
     TranscriptionEmbeddingHandler,
     MLBookEmbeddingHandler
 )
+
+
+class TranslatingHandlerFactory:
+    @staticmethod
+    def create_handler(data_category: DataCategory) -> TranslatingDataHandler:
+        if data_category == DataCategory.ML_BOOK:
+            return MLBookTranslatingHandler()
+        elif data_category == DataCategory.MEETING_TRANSCRIPTION:
+            return TranscriptionTranslatingHandler()
+        else:
+            raise ValueError("Unsupported data type")
+
+
+class TranslatingDispatcher:
+    factory = TranslatingHandlerFactory()
+
+    @classmethod
+    def dispatch(cls, data_model: NoSQLBaseDocument) -> VectorBaseDocument:
+        data_category = DataCategory(data_model.get_collection_name())
+        handler = cls.factory.create_handler(data_category)
+        translate_model = handler.clean(data_model)
+
+        logger.info(
+            "Document translated successfully.",
+            data_category=data_category,
+            cleaned_content_len=len(translate_model.content),
+        )
+
+        return translate_model
 
 
 class CleaningHandlerFactory:

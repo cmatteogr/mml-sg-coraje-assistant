@@ -23,4 +23,4 @@ def translate_text(input_text: str, source_language: str, target_language: str) 
     # get result
     translated_text = result['translatedText']
     #  return translated text
-    return translated_text
+    return str(translated_text)

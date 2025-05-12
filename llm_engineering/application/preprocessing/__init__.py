@@ -1,3 +1,3 @@
-from .dispatchers import ChunkingDispatcher, CleaningDispatcher, EmbeddingDispatcher
+from .dispatchers import ChunkingDispatcher, CleaningDispatcher, EmbeddingDispatcher, TranslatingDispatcher
 
-__all__ = ["CleaningDispatcher", "ChunkingDispatcher", "EmbeddingDispatcher"]
+__all__ = ["TranslatingDispatcher", "CleaningDispatcher", "ChunkingDispatcher", "EmbeddingDispatcher"]
