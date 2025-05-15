@@ -2,6 +2,24 @@ from langchain.prompts import PromptTemplate
 
 from .base import PromptTemplateFactory
 
+class SummarizeMLTranscriptionTemplate(PromptTemplateFactory):
+    prompt: str = """The following is a transcription from a Machine Learning meeting, 
+    the members are part of a study group focused on developing Machine Learning projects.
+    Maybe some details about the conversation/speak are missing due there isn't access to the video/images meeting.
+    Summarize the transcription extracting the relevant information; comments, ideas, explanations, projects descriptions,
+    etc. Clean the transcription if needed. The goal is use the transcription summary to know:
+    - What are they building?
+    - What tools are they using?
+    - What is the architecture of the solution?
+    - What challenges they had? and How they solved them.
+    Transcription text: {transcription}"""
+
+    def create_template(self) -> PromptTemplate:
+        return PromptTemplate(
+            template=self.prompt,
+            input_variables=["transcription"]
+        )
+
 
 class QueryExpansionTemplate(PromptTemplateFactory):
     prompt: str = """You are an AI language model assistant. Your task is to generate {expand_to_n}

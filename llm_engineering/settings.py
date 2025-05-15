@@ -90,7 +90,7 @@ class Settings(BaseSettings):
             Settings: The initialized settings object.
         """
 
-        try:
+        """try:
             logger.info("Loading settings from the ZenML secret store.")
 
             settings_secrets = Client().get_secret("settings")
@@ -98,8 +98,8 @@ class Settings(BaseSettings):
         except (RuntimeError, KeyError):
             logger.warning(
                 "Failed to load settings from the ZenML secret store. Defaulting to loading the settings from the '.env' file."
-            )
-            settings = Settings()
+            )"""
+        settings = Settings()
 
         return settings
 

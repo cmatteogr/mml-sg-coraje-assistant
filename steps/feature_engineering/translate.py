@@ -1,8 +1,8 @@
 from typing_extensions import Annotated
 from zenml import get_step_context, step
 
-from llm_engineering.application.preprocessing import TranslatingDispatcher
-from llm_engineering.domain.translated_documents import TranslatedDocument
+from llm_engineering.application.preprocessing import TranslationDispatcher
+from llm_engineering.domain.translation_documents import TranslatedDocument
 
 
 @step
@@ -11,7 +11,7 @@ def translate_documents(
 ) -> Annotated[list, "translated_documents"]:
     translated_documents = []
     for document in documents:
-        translated_document = TranslatingDispatcher.dispatch(document)
+        translated_document = TranslationDispatcher.dispatch(document)
         translated_documents.append(translated_document)
 
     step_context = get_step_context()

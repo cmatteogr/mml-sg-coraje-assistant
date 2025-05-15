@@ -14,7 +14,6 @@ def translate_text(input_text: str, source_language: str, target_language: str) 
     # init translator client
     translate_client = translate.Client()
     # execute translation
-    print(f'translate from {source_language}, to {target_language}')
     result = translate_client.translate(
         input_text,
         target_language=target_language,
