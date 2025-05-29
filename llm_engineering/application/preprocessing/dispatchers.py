@@ -8,15 +8,20 @@ from .chunking_data_handlers import (
     MLBookChunkingHandler,
     TranscriptionChunkingHandler
 )
-from .translating_data_handlers import (
-    TranslatingDataHandler,
-    MLBookTranslatingHandler,
-    TranscriptionTranslatingHandler
+from .translation_data_handlers import (
+    TranslationDataHandler,
+    MLBookTranslationHandler,
+    TranscriptionTranslationHandler
 )
 from .cleaning_data_handlers import (
     CleaningDataHandler,
     MLBookCleaningHandler,
     TranscriptionCleaningHandler
+)
+from .summarizing_data_handlers import (
+    SummaryDataHandler,
+    MLBookSummaryHandler,
+    TranscriptionSummaryHandler
 )
 from .embedding_data_handlers import (
     EmbeddingDataHandler,
@@ -28,23 +33,23 @@ from .embedding_data_handlers import (
 
 class TranslatingHandlerFactory:
     @staticmethod
-    def create_handler(data_category: DataCategory) -> TranslatingDataHandler:
+    def create_handler(data_category: DataCategory) -> TranslationDataHandler:
         if data_category == DataCategory.ML_BOOK:
-            return MLBookTranslatingHandler()
+            return MLBookTranslationHandler()
         elif data_category == DataCategory.MEETING_TRANSCRIPTION:
-            return TranscriptionTranslatingHandler()
+            return TranscriptionTranslationHandler()
         else:
             raise ValueError("Unsupported data type")
 
 
-class TranslatingDispatcher:
+class TranslationDispatcher:
     factory = TranslatingHandlerFactory()
 
     @classmethod
     def dispatch(cls, data_model: NoSQLBaseDocument) -> VectorBaseDocument:
         data_category = DataCategory(data_model.get_collection_name())
         handler = cls.factory.create_handler(data_category)
-        translate_model = handler.clean(data_model)
+        translate_model = handler.translate(data_model)
 
         logger.info(
             "Document translated successfully.",
@@ -71,7 +76,7 @@ class CleaningDispatcher:
 
     @classmethod
     def dispatch(cls, data_model: NoSQLBaseDocument) -> VectorBaseDocument:
-        data_category = DataCategory(data_model.get_collection_name())
+        data_category = data_model.get_category()
         handler = cls.factory.create_handler(data_category)
         clean_model = handler.clean(data_model)
 
@@ -82,6 +87,35 @@ class CleaningDispatcher:
         )
 
         return clean_model
+
+
+class SummaryHandlerFactory:
+    @staticmethod
+    def create_handler(data_category: DataCategory) -> SummaryDataHandler:
+        if data_category == DataCategory.ML_BOOK:
+            return MLBookSummaryHandler()
+        elif data_category == DataCategory.MEETING_TRANSCRIPTION:
+            return TranscriptionSummaryHandler()
+        else:
+            raise ValueError("Unsupported data type")
+
+
+class SummaryDispatcher:
+    factory = SummaryHandlerFactory()
+
+    @classmethod
+    def dispatch(cls, data_model: NoSQLBaseDocument) -> VectorBaseDocument:
+        data_category = data_model.get_category()
+        handler = cls.factory.create_handler(data_category)
+        summary_model = handler.summary(data_model)
+
+        logger.info(
+            "Document summary successfully.",
+            data_category=data_category,
+            cleaned_content_len=len(summary_model.content),
+        )
+
+        return summary_model
 
 
 class ChunkingHandlerFactory:

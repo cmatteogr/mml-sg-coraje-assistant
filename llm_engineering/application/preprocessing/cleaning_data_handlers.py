@@ -32,7 +32,7 @@ class MLBookCleaningHandler(CleaningDataHandler):
     def clean(self, data_model: MLBookDocument) -> CleanedMLBookDocument:
         return CleanedMLBookDocument(
             id=data_model.id,
-            content=clean_text(" #### ".join(data_model.content.values())),
+            content=clean_text(data_model.content),
             platform=data_model.platform,
             filepath=data_model.filepath,
             name=data_model.name,
@@ -43,7 +43,7 @@ class TranscriptionCleaningHandler(CleaningDataHandler):
     def clean(self, data_model: TranscriptionDocument) -> CleanedTranscriptionDocument:
         return CleanedTranscriptionDocument(
             id=data_model.id,
-            content=clean_text(" #### ".join(data_model.content.values())),
+            content=clean_text(data_model.content),
             platform=data_model.platform,
             name=data_model.name,
             filepath=data_model.filepath,
