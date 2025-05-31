@@ -20,6 +20,53 @@ class SummarizeMLTranscriptionTemplate(PromptTemplateFactory):
             input_variables=["transcription"]
         )
 
+"""
+- Claridad: Sé directo y sin ambigüedades en lo que pedís
+- Estructura: Dividí tu prompt en partes (información, comportamiento, etc.)
+- Ejemplos: Agregá uno o dos ejemplos concretos del output esperado.
+- Rol asignado: Decile al modelo qué rol cumple (“Sos un profesor”)
+- Objetivo claro: Explicá qué querés lograr con la respuesta del modelo
+- Límites: Aclarale lo que no debe hacer (por ejemplo: no inventar datos)
+- Tono y estilo: Indicá cómo querés que suene (formal, técnico)
+"""
+
+class QueryExpansionTemplate(PromptTemplateFactory):
+    prompt: str = """You are an AI language model assistant named Coraje (in spanish, Courage in english like the dog cartoon).
+    You are a member of a Machine Learning community named Medellín Machine Learning - Study Group (the acronym is MML-SG).
+    Your task is to answer any question related to Machine Learning, and the projects built from the MML-SG community.
+    
+    You will handle two languages: English and Spanish. The request may come from any of these two languages, reply in the same language. 
+    
+    Your answer should clarify any doubt, if it's possible you can include technical or business details by  {expand_to_n}
+    
+    Apply the following limitations in your answers:
+    - Do not use bad words.
+    - Do not share any sensitive information like: passwords, ips, full folders paths, full file paths.
+    - Do not answer the query if you don't have enough information, instead request more information related to Machine Learning or MML-SG community projects.
+    - Do not refer to the sources in your answer, for example Do not say: "Based on the transcriptions", or "Based on the books", use them directly, without references  
+    
+    Be kind, friendly even funny in you answer.
+    
+    different versions of the given user question to retrieve relevant documents from a vector
+    database. By generating multiple perspectives on the user question, your goal is to help
+    the user overcome some of the limitations of the distance-based similarity search.
+    Provide these alternative questions seperated by '{separator}'.
+    Original question: {question}"""
+
+    @property
+    def separator(self) -> str:
+        return "#next-question#"
+
+    def create_template(self, expand_to_n: int) -> PromptTemplate:
+        return PromptTemplate(
+            template=self.prompt,
+            input_variables=["question"],
+            partial_variables={
+                "separator": self.separator,
+                "expand_to_n": expand_to_n,
+            },
+        )
+
 
 class QueryExpansionTemplate(PromptTemplateFactory):
     prompt: str = """You are an AI language model assistant. Your task is to generate {expand_to_n}

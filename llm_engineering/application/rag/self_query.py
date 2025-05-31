@@ -3,7 +3,7 @@ from langchain_openai import ChatOpenAI
 from loguru import logger
 
 from llm_engineering.application import utils
-from llm_engineering.domain.documents import UserDocument
+from llm_engineering.domain.documents import
 from llm_engineering.domain.queries import Query
 from llm_engineering.settings import settings
 
