@@ -76,7 +76,7 @@ class CleaningDispatcher:
 
     @classmethod
     def dispatch(cls, data_model: NoSQLBaseDocument) -> VectorBaseDocument:
-        data_category = data_model.get_category()
+        data_category = data_model.get_collection_name()
         handler = cls.factory.create_handler(data_category)
         clean_model = handler.clean(data_model)
 

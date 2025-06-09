@@ -28,9 +28,8 @@ class MLBookCrawler(BaseLocalCrawler):
         ml_book_text = self._extract_ml_book_pdf(destination_path)
         logger.info(f"Found {len(ml_book_text)} ml books for: {link}")
 
-        content = {book_name: ml_book_text}
         # save new book
-        instance = self.model(platform="ml_books", content=content, name=book_name, author='', filepath=destination_path)
+        instance = self.model(platform="ml_books", content=ml_book_text, name=book_name, author='', filepath=destination_path)
         instance.save()
 
         logger.info(f"Finished scrapping data for ml book: {link}")

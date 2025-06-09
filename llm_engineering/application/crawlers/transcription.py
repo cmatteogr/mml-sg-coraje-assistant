@@ -26,10 +26,8 @@ class TranscriptionCrawler(BaseLocalCrawler):
 
         transcription = self._extract_transcription(destination_path)
         logger.info(f"Found {len(transcription)} meeting transcription for: {link}")
-
-        content = {transcription_name: transcription}
         # save new book
-        instance = self.model(platform="transcription", content=content, name=transcription_name,
+        instance = self.model(platform="transcription", content=transcription, name=transcription_name,
                               filepath=destination_path)
         instance.save()
 

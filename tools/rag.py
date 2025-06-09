@@ -9,12 +9,7 @@ if __name__ == "__main__":
     set_verbose(True)
 
     query = """
-        My name is Paul Iusztin.
-        
-        Could you draft a LinkedIn post discussing RAG systems?
-        I'm particularly interested in:
-            - how RAG works
-            - how it is integrated with vector DBs and large language models (LLMs).
+        What is MML-SG?
         """
 
     retriever = ContextRetriever(mock=False)

@@ -9,7 +9,7 @@ def feature_engineering(ml_book_names: list[str], transcription_names: list[str]
 
     # translate documents
     # NOTE: Only needed for the Transcriptions
-    translated_documents = fe_steps.translate_documents(raw_documents)
+    # translated_documents = fe_steps.translate_documents(raw_documents)
 
     # clean documents
     cleaned_documents = fe_steps.clean_documents(raw_documents)
@@ -37,8 +37,6 @@ ml_book_names = [
 
 transcription_names = [
     '2. Exploración de Modelos de ML y Exploración de Datos (2024-02-28 19_14 GMT-5)',
-    '3. Análisis de Datos y Selección de Variables para Modelado (2024-03-06 19_08 GMT-5)',
-#    '4. Construcción del Modelo de Predicción - Supervised Learning (2024-03-13 19_07 GMT-5)',
-#   '5. Supervised Learning - Optimización del Modelo (2024-04-10 19_11 GMT-5)'
+    '3. Análisis de Datos y Selección de Variables para Modelado (2024-03-06 19_08 GMT-5)'
 ]
 feature_engineering(ml_book_names, transcription_names)

@@ -4,7 +4,7 @@ from .types import DataCategory
 
 
 class Document(NoSQLBaseDocument, ABC):
-    content: dict
+    content: str
     platform: str
 
 class TranscriptionDocument(Document):

@@ -1,8 +1,4 @@
 from abc import ABC
-from typing import Optional
-
-from pydantic import UUID4
-
 from .base import VectorBaseDocument
 from .types import DataCategory
 
