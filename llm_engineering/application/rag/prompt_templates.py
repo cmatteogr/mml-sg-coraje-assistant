@@ -5,14 +5,19 @@ from .base import PromptTemplateFactory
 class SummarizeMLTranscriptionTemplate(PromptTemplateFactory):
     prompt: str = """The following is a transcription from a Machine Learning meeting, 
     the members are part of a study group focused on developing Machine Learning projects.
-    Maybe some details about the conversation/speak are missing due there isn't access to the video/images meeting.
+    Maybe some details about the conversation/speak are missing due there isn't access to the video/images meeting and sometimes the audio quality not good enough.
     Summarize the transcription extracting the relevant information; comments, ideas, explanations, projects descriptions,
     etc. Clean the transcription if needed. The goal is use the transcription summary to know:
+    - Meeting summary title.
     - What are they building?
     - What tools are they using?
     - What is the architecture of the solution?
     - What challenges they had? and How they solved them.
-    Transcription text: {transcription}"""
+    Transcription text: {transcription}
+    
+    Only return the summary with the items defined above, nothing else.
+    Return the format as a markdown, where 'Meeting summary title' is the main title and the rest of items are subtitles.
+    """
 
     def create_template(self) -> PromptTemplate:
         return PromptTemplate(
