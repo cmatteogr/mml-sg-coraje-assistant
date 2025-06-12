@@ -10,7 +10,7 @@ from llm_engineering.domain.cleaned_documents import (
     CleanedMLBookDocument
 )
 
-from .operations import chunk_article, chunk_text
+from .operations import chunk_text, chunk_header_chunk
 
 CleanedDocumentT = TypeVar("CleanedDocumentT", bound=CleanedDocument)
 ChunkT = TypeVar("ChunkT", bound=Chunk)
@@ -80,9 +80,7 @@ class TranscriptionChunkingHandler(ChunkingDataHandler):
         data_models_list = []
 
         cleaned_content = data_model.content
-        chunks = chunk_text(
-            cleaned_content, chunk_size=self.metadata["chunk_size"], chunk_overlap=self.metadata["chunk_overlap"]
-        )
+        chunks = chunk_header_chunk(cleaned_content)
 
         for chunk in chunks:
             chunk_id = hashlib.md5(chunk.encode()).hexdigest()

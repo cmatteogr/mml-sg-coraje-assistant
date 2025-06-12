@@ -4,6 +4,7 @@ import os
 import fitz
 from llm_engineering.domain.documents import MLBookDocument
 from pathlib import Path
+from langchain_community.document_loaders.pdf import UnstructuredPDFLoader
 
 
 
@@ -44,6 +45,7 @@ class MLBookCrawler(BaseLocalCrawler):
         Returns:
             str: Document text
         """
+        u_pdf_ml_book = UnstructuredPDFLoader(filepath).load()
         with fitz.open(filepath) as pdf:
             text = ""
             for page in pdf:

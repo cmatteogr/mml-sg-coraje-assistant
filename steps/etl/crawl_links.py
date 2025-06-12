@@ -6,7 +6,6 @@ from zenml import get_step_context, step
 from llm_engineering.application.crawlers.dispatcher import CrawlerDispatcher
 
 
-@step
 def crawl_links(links: list[Tuple[str, str]]) -> Annotated[list[str], "crawled_links"]:
     dispatcher = CrawlerDispatcher.build().register_transcription().register_ml_book()
 
@@ -20,8 +19,8 @@ def crawl_links(links: list[Tuple[str, str]]) -> Annotated[list[str], "crawled_l
 
         metadata = _add_to_metadata(metadata, crawled_domain, successfull_crawl)
 
-    step_context = get_step_context()
-    step_context.add_output_metadata(output_name="crawled_links", metadata=metadata)
+    #step_context = get_step_context()
+    #step_context.add_output_metadata(output_name="crawled_links", metadata=metadata)
 
     logger.info(f"Successfully crawled {successfull_crawls} / {len(links)} links.")
 

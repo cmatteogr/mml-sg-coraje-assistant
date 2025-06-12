@@ -57,10 +57,10 @@ _headers_to_split_on_base = [
         ("###", "###"),
     ]
 
-def chunk_langchain(text: str,
-                    tokenizer_model:str="TheBloke/Nous-Hermes-2-Mixtral-8x7B-DPO-GPTQ",
-                    headers_to_split_on=None,
-                    max_tokens:int=200):
+def chunk_header_chunk(text: str,
+                       tokenizer_model:str="TheBloke/Nous-Hermes-2-Mixtral-8x7B-DPO-GPTQ",
+                       headers_to_split_on=None,
+                       max_tokens:int=200):
     """
     Chunking using Langchain text splitter
     :param text: text to split in chunks

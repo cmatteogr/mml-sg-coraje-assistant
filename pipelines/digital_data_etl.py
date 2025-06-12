@@ -1,14 +1,11 @@
 from typing import Tuple
 
-from zenml import pipeline
 from steps.etl import crawl_links
 
-
-@pipeline
 def digital_data_etl(links: list[Tuple[str, str]]) -> str:
     last_step = crawl_links(links=links)
 
-    return last_step.invocation_id
+    # return last_step.invocation_id
 
 
 links = [
