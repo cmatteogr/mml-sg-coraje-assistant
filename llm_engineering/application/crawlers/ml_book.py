@@ -46,9 +46,5 @@ class MLBookCrawler(BaseLocalCrawler):
             str: Document text
         """
         u_pdf_ml_book = UnstructuredPDFLoader(filepath).load()
-        with fitz.open(filepath) as pdf:
-            text = ""
-            for page in pdf:
-                text += page.get_text()
         # return PDF text
-        return text
+        return u_pdf_ml_book[0].page_content
