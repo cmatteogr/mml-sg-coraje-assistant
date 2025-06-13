@@ -22,13 +22,6 @@ class ChunkingDataHandler(ABC, Generic[CleanedDocumentT, ChunkT]):
     All data transformations logic for the chunking step is done here
     """
 
-    @property
-    def metadata(self) -> dict:
-        return {
-            "chunk_size": 500,
-            "chunk_overlap": 50,
-        }
-
     @abstractmethod
     def chunk(self, data_model: CleanedDocumentT) -> list[ChunkT]:
         pass
@@ -67,14 +60,7 @@ class MLBookChunkingHandler(ChunkingDataHandler):
         return data_models_list
 
 
-
 class TranscriptionChunkingHandler(ChunkingDataHandler):
-    @property
-    def metadata(self) -> dict:
-        return {
-            "chunk_size": 250,
-            "chunk_overlap": 25,
-        }
 
     def chunk(self, data_model: CleanedTranscriptionDocument) -> list[TranscriptionChunk]:
         data_models_list = []
