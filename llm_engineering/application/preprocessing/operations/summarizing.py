@@ -1,7 +1,5 @@
 from langchain_google_genai import ChatGoogleGenerativeAI
 from llm_engineering.application.rag.prompt_templates import SummarizeMLTranscriptionTemplate
-import os
-import getpass
 
 def summarize_transcription_text(transcription: str, llm_model: str = "gemini-2.0-flash") -> str:
     """
@@ -13,7 +11,8 @@ def summarize_transcription_text(transcription: str, llm_model: str = "gemini-2.
     # init prompt for ML Transcription summaries
 
     prompt = SummarizeMLTranscriptionTemplate().create_template()
-    model = ChatGoogleGenerativeAI(model=llm_model, project='corajemml-sg')
+    #model = ChatGoogleGenerativeAI(model=llm_model, project='corajemml-sg')
+    model = ChatGoogleGenerativeAI(model=llm_model)
 
     chain = prompt | model
     # execute summary

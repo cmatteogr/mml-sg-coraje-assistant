@@ -7,9 +7,7 @@ from qdrant_client.models import FieldCondition, Filter, MatchValue
 from llm_engineering.application import utils
 from llm_engineering.application.preprocessing.dispatchers import EmbeddingDispatcher
 from llm_engineering.domain.embedded_chunks import (
-
     EmbeddedChunk,
-
 )
 from llm_engineering.domain.queries import EmbeddedQuery, Query
 

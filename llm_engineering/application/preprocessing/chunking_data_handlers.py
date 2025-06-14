@@ -62,6 +62,13 @@ class MLBookChunkingHandler(ChunkingDataHandler):
 
 class TranscriptionChunkingHandler(ChunkingDataHandler):
 
+    @property
+    def metadata(self) -> dict:
+        return {
+            "chunk_size": 250,
+            "chunk_overlap": 25,
+        }
+
     def chunk(self, data_model: CleanedTranscriptionDocument) -> list[TranscriptionChunk]:
         data_models_list = []
 
