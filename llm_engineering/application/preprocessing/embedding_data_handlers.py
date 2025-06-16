@@ -47,8 +47,9 @@ class QueryEmbeddingHandler(EmbeddingDataHandler):
     def map_model(self, data_model: Query, embedding: list[float]) -> EmbeddedQuery:
         return EmbeddedQuery(
             id=data_model.id,
-            author_id=data_model.author_id,
-            author_full_name=data_model.author_full_name,
+            author=data_model.author,
+            topics=data_model.topics,
+            tools=data_model.tools,
             content=data_model.content,
             embedding=embedding,
             metadata={

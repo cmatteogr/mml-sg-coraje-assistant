@@ -6,8 +6,9 @@ from llm_engineering.domain.types import DataCategory
 
 class Query(VectorBaseDocument):
     content: str
-    author_id: UUID4 | None = None
-    author_full_name: str | None = None
+    author: list[str] | None = None
+    topics: list[str] | None = None
+    tools: list[str] | None = None
     metadata: dict = Field(default_factory=dict)
 
     class Config:
@@ -21,8 +22,9 @@ class Query(VectorBaseDocument):
         return Query(
             id=self.id,
             content=new_content,
-            author_id=self.author_id,
-            author_full_name=self.author_full_name,
+            author=self.author,
+            topics=self.topics,
+            tools=self.tools,
             metadata=self.metadata,
         )
 

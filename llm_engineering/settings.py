@@ -8,6 +8,8 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8")
 
     # --- Required settings even when working locally. ---
+    # Ollama
+    OLLAMA_MODEL_ID: str = "deepseek-r1:14b"
 
     # OpenAI API
     OPENAI_MODEL_ID: str = "gpt-4o-mini"

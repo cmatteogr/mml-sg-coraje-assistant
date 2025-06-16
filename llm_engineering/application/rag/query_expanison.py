@@ -1,7 +1,7 @@
 import opik
-from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
 from loguru import logger
-
+import json
 from llm_engineering.domain.queries import Query
 from llm_engineering.settings import settings
 
@@ -19,19 +19,19 @@ class QueryExpansion(RAGStep):
 
         query_expansion_template = QueryExpansionTemplate()
         prompt = query_expansion_template.create_template(expand_to_n - 1)
-        model = ChatOpenAI(model=settings.OPENAI_MODEL_ID, api_key=settings.OPENAI_API_KEY, temperature=0)
+        model = ChatOllama(model=settings.OLLAMA_MODEL_ID)
 
         chain = prompt | model
 
         response = chain.invoke({"question": query})
         result = response.content
-
-        queries_content = result.strip().split(query_expansion_template.separator)
+        result = result.split('</think>')[1].strip().replace('```json', '').replace('```', '')
+        query_metadata = json.loads(str(result))
 
         queries = [query]
         queries += [
             query.replace_content(stripped_content)
-            for content in queries_content
+            for content in query_metadata['alternatives']
             if (stripped_content := content.strip())
         ]
 

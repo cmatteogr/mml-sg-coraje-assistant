@@ -32,6 +32,7 @@ class SummarizeMLTranscriptionGetMetadataTemplate(PromptTemplateFactory):
     Maybe some details about the conversation/speak are missing due there isn't access to the video/images meeting and sometimes the audio quality not good enough.
     Extract or infer the topics and tools mentioned in the meeting, usually they meet to discus a project they are working on.
     Extract the topics and tools in JSON format with two keys 'topics' and 'tools', both elements contains a list of strings all the items in lower case.
+    The tools should be technical tools related to Machine Learning, Data science, Statistics, Programming, Algebra, Calculus or similar fields. 
     
     Example #1:
     {{
@@ -95,61 +96,23 @@ class SummarizeMLBookIndexTemplate(PromptTemplateFactory):
 """
 
 class QueryExpansionTemplate(PromptTemplateFactory):
-    prompt: str = """You are an AI language model assistant named Coraje (in spanish, Courage in english like the dog cartoon).
-    You are a member of a Machine Learning community named Medellín Machine Learning - Study Group (the acronym is MML-SG).
-    Your task is to answer any question related to Machine Learning, and the projects built from the MML-SG community.
-    
-    You will handle two languages: English and Spanish. The request may come from any of these two languages, reply in the same language. 
-    
-    Your answer should clarify any doubt, if it's possible you can include technical or business details by  {expand_to_n}
-    
-    Apply the following limitations in your answers:
-    - Do not use bad words.
-    - Do not share any sensitive information like: passwords, ips, full folders paths, full file paths.
-    - Do not answer the query if you don't have enough information, instead request more information related to Machine Learning or MML-SG community projects.
-    - Do not refer to the sources in your answer, for example Do not say: "Based on the transcriptions", or "Based on the books", use them directly, without references  
-    
-    Be kind, friendly even funny in you answer.
-    
-    different versions of the given user question to retrieve relevant documents from a vector
-    database. By generating multiple perspectives on the user question, your goal is to help
-    the user overcome some of the limitations of the distance-based similarity search.
-    Provide these alternative questions seperated by '{separator}'.
-    Original question: {question}"""
-
-    @property
-    def separator(self) -> str:
-        return "#next-question#"
-
-    def create_template(self, expand_to_n: int) -> PromptTemplate:
-        return PromptTemplate(
-            template=self.prompt,
-            input_variables=["question"],
-            partial_variables={
-                "separator": self.separator,
-                "expand_to_n": expand_to_n,
-            },
-        )
-
-
-class QueryExpansionTemplate(PromptTemplateFactory):
     prompt: str = """You are an AI language model assistant. Your task is to generate {expand_to_n}
     different versions of the given user question to retrieve relevant documents from a vector
     database. By generating multiple perspectives on the user question, your goal is to help
     the user overcome some of the limitations of the distance-based similarity search.
-    Provide these alternative questions seperated by '{separator}'.
-    Original question: {question}"""
+    Return a JSON format with one key 'alternatives' which contain a list of strings (the alternative queries).
+    
+    Original question: {question}
+    
+    Only return the JSON object as a text with the items defined above, nothing else.
+    """
 
-    @property
-    def separator(self) -> str:
-        return "#next-question#"
 
     def create_template(self, expand_to_n: int) -> PromptTemplate:
         return PromptTemplate(
             template=self.prompt,
             input_variables=["question"],
             partial_variables={
-                "separator": self.separator,
                 "expand_to_n": expand_to_n,
             },
         )
@@ -157,27 +120,42 @@ class QueryExpansionTemplate(PromptTemplateFactory):
 
 class SelfQueryTemplate(PromptTemplateFactory):
     prompt: str = """You are an AI language model assistant. Your task is to extract information from a user question.
-    The required information that needs to be extracted is the user name or user id. 
-    Your response should consists of only the extracted user name (e.g., John Doe) or id (e.g. 1345256), nothing else.
-    If the user question does not contain any user name or id, you should return the following token: none.
+    The required information that needs to be extracted is the tools, topics or authors:
     
-    For example:
-    QUESTION 1:
-    My name is Paul Iusztin and I want a post about...
-    RESPONSE 1:
-    Paul Iusztin
+    * tools: technical tools related to Machine Learning, Data science, Statistics, Programming, Algebra, Calculus or similar fields.
+    * topics: Machine Learning, Data science, Statistics, Programming, Algebra, Calculus or Business topics.
+    * authors: Machine Learning book authors.
     
-    QUESTION 2:
-    I want to write a post about...
-    RESPONSE 2:
-    none
+    Extract authors tools and topics in JSON format with two keys 'authors' 'tools', and 'topics', all of them contain a list of strings, all the elements are lowercase.
+    If you don't find any information for tools, topics or authors in the user question, you should return an empty list for the corresponding key: []
     
-    QUESTION 3:
-    My user id is 1345256 and I want to write a post about...
-    RESPONSE 3:
-    1345256
+    You can use these examples as reference:
     
-    User question: {question}"""
+    Example #1:
+    {{
+    "tools": ["scikit-learn", "mlflow", "airflow", "tensorflow"],
+    "topics": ["game theory", "bayesian games", "decision making", "attack graph"],
+    "authors": ["charles a. kamhoua", "chistopher d. kiekintveld", "fei fang"]
+    }}
+    
+    Example #2:
+    {{
+    "tools": ["scikit-learn", "data-profiling", "jupyter notebook"],
+    "topics": ["supervised learning", "linear regression", "deep neural network", "backpropagation"],
+    "authors": []
+    }}
+    
+    Example #3:
+    {{
+    "tools": [],
+    "topics": [],
+    "authors": ["simon j.d. prince"]
+    }}
+    
+    User question: {question}
+    
+    Only return the JSON object as a text with the items defined above, nothing else.
+    """
 
     def create_template(self) -> PromptTemplate:
         return PromptTemplate(template=self.prompt, input_variables=["question"])

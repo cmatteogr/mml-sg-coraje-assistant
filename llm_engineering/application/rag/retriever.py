@@ -7,7 +7,7 @@ from qdrant_client.models import FieldCondition, Filter, MatchValue
 from llm_engineering.application import utils
 from llm_engineering.application.preprocessing.dispatchers import EmbeddingDispatcher
 from llm_engineering.domain.embedded_chunks import (
-    EmbeddedChunk,
+    EmbeddedChunk, EmbeddedTranscriptionChunk, EmbeddedMLBookChunk,
 )
 from llm_engineering.domain.queries import EmbeddedQuery, Query
 
@@ -32,14 +32,8 @@ class ContextRetriever:
         query_model = Query.from_str(query)
 
         query_model = self._metadata_extractor.generate(query_model)
-        logger.info(
-            f"Successfully extracted the author_full_name = {query_model.author_full_name} from the query.",
-        )
 
         n_generated_queries = self._query_expander.generate(query_model, expand_to_n=expand_to_n_queries)
-        logger.info(
-            f"Successfully generated {len(n_generated_queries)} search queries.",
-        )
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             search_tasks = [executor.submit(self._search, _query_model, k) for _query_model in n_generated_queries]
@@ -63,7 +57,8 @@ class ContextRetriever:
         def _search_data_category(
             data_category_odm: type[EmbeddedChunk], embedded_query: EmbeddedQuery
         ) -> list[EmbeddedChunk]:
-            if embedded_query.author_id:
+            if False:
+            #if embedded_query.author_id:
                 query_filter = Filter(
                     must=[
                         FieldCondition(
@@ -85,11 +80,10 @@ class ContextRetriever:
 
         embedded_query: EmbeddedQuery = EmbeddingDispatcher.dispatch(query)
 
-        post_chunks = _search_data_category(EmbeddedPostChunk, embedded_query)
-        articles_chunks = _search_data_category(EmbeddedArticleChunk, embedded_query)
-        repositories_chunks = _search_data_category(EmbeddedRepositoryChunk, embedded_query)
+        transcription_chunks = _search_data_category(EmbeddedTranscriptionChunk, embedded_query)
+        ml_book_chunks = _search_data_category(EmbeddedMLBookChunk, embedded_query)
 
-        retrieved_chunks = post_chunks + articles_chunks + repositories_chunks
+        retrieved_chunks = transcription_chunks + ml_book_chunks
 
         return retrieved_chunks
 

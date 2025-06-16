@@ -1,9 +1,7 @@
 import opik
-from langchain_openai import ChatOpenAI
+from langchain_ollama import ChatOllama
 from loguru import logger
-
-from llm_engineering.application import utils
-from llm_engineering.domain.documents import UserDocument
+import json
 from llm_engineering.domain.queries import Query
 from llm_engineering.settings import settings
 
@@ -18,28 +16,32 @@ class SelfQuery(RAGStep):
             return query
 
         prompt = SelfQueryTemplate().create_template()
-        model = ChatOpenAI(model=settings.OPENAI_MODEL_ID, api_key=settings.OPENAI_API_KEY, temperature=0)
+        model = ChatOllama(model=settings.OLLAMA_MODEL_ID)
 
         chain = prompt | model
 
         response = chain.invoke({"question": query})
-        user_full_name = response.content.strip("\n ")
 
-        if user_full_name == "none":
+        result = response.content
+
+        if result == "none":
             return query
 
-        first_name, last_name = utils.split_user_full_name(user_full_name)
-        user = UserDocument.get_or_create(first_name=first_name, last_name=last_name)
-
-        query.author_id = user.id
-        query.author_full_name = user.full_name
+        result = result.split('</think>')[1].strip().replace('```json', '').replace('```', '')
+        # json format and keys
+        query_metadata = json.loads(str(result))
+        # get query metadata
+        query.author = query_metadata['authors']
+        query.topics = query_metadata['topics']
+        query.tools = query_metadata['tools']
 
         return query
 
 
 if __name__ == "__main__":
-    query = Query.from_str("I am Paul Iusztin. Write an article about the best types of advanced RAG methods.")
+    query = Query.from_str("What is generative model?")
     self_query = SelfQuery()
     query = self_query.generate(query)
-    logger.info(f"Extracted author_id: {query.author_id}")
-    logger.info(f"Extracted author_full_name: {query.author_full_name}")
+    logger.info(f"Extracted author: {query.author}")
+    logger.info(f"Extracted topics: {query.topics}")
+    logger.info(f"Extracted tools: {query.tools}")
