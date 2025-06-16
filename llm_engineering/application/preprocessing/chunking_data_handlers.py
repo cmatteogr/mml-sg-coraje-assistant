@@ -53,6 +53,7 @@ class MLBookChunkingHandler(ChunkingDataHandler):
                 filepath=data_model.filepath,
                 name=data_model.name,
                 author=data_model.author,
+                topics=data_model.topics,
                 metadata=self.metadata,
             )
             data_models_list.append(model)
@@ -84,6 +85,8 @@ class TranscriptionChunkingHandler(ChunkingDataHandler):
                 document_id=data_model.id,
                 name=data_model.name,
                 filepath=data_model.filepath,
+                topics=data_model.topics,
+                tools=data_model.tools,
                 metadata=self.metadata,
             )
             data_models_list.append(model)

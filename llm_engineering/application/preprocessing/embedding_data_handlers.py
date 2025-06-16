@@ -70,6 +70,7 @@ class MLBookEmbeddingHandler(EmbeddingDataHandler):
             filepath=data_model.filepath,
             name=data_model.name,
             author=data_model.author,
+            topics=data_model.topics,
             metadata={
                 "embedding_model_id": embedding_model.model_id,
                 "embedding_size": embedding_model.embedding_size,
@@ -89,6 +90,8 @@ class TranscriptionEmbeddingHandler(EmbeddingDataHandler):
             document_id=data_model.document_id,
             name=data_model.name,
             filepath=data_model.filepath,
+            topics=data_model.topics,
+            tools=data_model.tools,
             metadata={
                 "embedding_model_id": embedding_model.model_id,
                 "embedding_size": embedding_model.embedding_size,

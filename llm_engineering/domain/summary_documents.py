@@ -12,6 +12,8 @@ class SummaryDocument(VectorBaseDocument, ABC):
 class SummaryTranscriptionDocument(SummaryDocument):
     name: str
     filepath: str
+    topics: list[str]
+    tools: list[str]
 
     class Config:
         name = "summary_transcription"
@@ -22,7 +24,8 @@ class SummaryTranscriptionDocument(SummaryDocument):
 class SummaryMLBookDocument(SummaryDocument):
     filepath: str
     name: str
-    author: str
+    author: list[str]
+    topics: list[str]
 
     class Config:
         name = "summary_ml_book"

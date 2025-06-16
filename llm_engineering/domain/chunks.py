@@ -17,6 +17,8 @@ class Chunk(VectorBaseDocument, ABC):
 class TranscriptionChunk(Chunk):
     name: str
     filepath: str
+    topics: list[str]
+    tools: list[str]
 
     class Config:
         category = DataCategory.MEETING_TRANSCRIPTION
@@ -26,6 +28,8 @@ class MLBookChunk(Chunk):
     filepath: str
     name: str
     author: str
+    author: list[str]
+    topics: list[str]
 
     class Config:
         category = DataCategory.ML_BOOK

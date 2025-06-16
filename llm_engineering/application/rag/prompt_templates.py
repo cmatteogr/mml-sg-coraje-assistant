@@ -25,6 +25,65 @@ class SummarizeMLTranscriptionTemplate(PromptTemplateFactory):
             input_variables=["transcription"]
         )
 
+
+class SummarizeMLTranscriptionGetMetadataTemplate(PromptTemplateFactory):
+    prompt: str = """The following is a transcription from a Machine Learning meeting, 
+    the members are part of a study group focused on developing Machine Learning projects.
+    Maybe some details about the conversation/speak are missing due there isn't access to the video/images meeting and sometimes the audio quality not good enough.
+    Extract or infer the topics and tools mentioned in the meeting, usually they meet to discus a project they are working on.
+    Extract the topics and tools in JSON format with two keys 'topics' and 'tools', both elements contains a list of strings all the items in lower case.
+    
+    Example #1:
+    {{
+    "topics": ["supervised learning", "cars", "price prediction"],
+    "tools": ["scikit-learn", "mlflow", "airflow", "tensorflow"]
+    }}
+    
+    Example #2:
+    {{
+    "topics": ["unsupervised learning", "kmeans", "customer profiling"],
+    "tools": ["scikit-learn", "data-profiling", "jupyter notebook"]
+    }}
+    
+    Transcription text: {transcription}
+
+    Only return the JSON object as a text with the items defined above, nothing else.
+    """
+
+    def create_template(self) -> PromptTemplate:
+        return PromptTemplate(
+            template=self.prompt,
+            input_variables=["transcription"]
+        )
+
+
+class SummarizeMLBookIndexTemplate(PromptTemplateFactory):
+    prompt: str = """The following are the home pages of Machine Learning or related books, 
+    Extract authors and book topics in JSON format with two keys 'authors' and 'topics', both elements contain a list of strings, all the elements are lowercase.
+    
+    Example #1:
+    {{
+    "authors": ["charles a. kamhoua", "chistopher d. kiekintveld", "fei fang"],
+    "topics": ["game theory", "bayesian games", "decision making", "attack graph"]
+    }}
+    
+    Example #2:
+    {{
+    "authors": ["simon j.d. prince"],
+    "topics": ["supervised learning", "linear regression", "deep neural network", "backpropagation"]
+    }}
+
+    Machine Learning book home pages text: {ml_book_home_pages}
+
+    Only return the JSON object as a text with the items defined above, nothing else.
+    """
+
+    def create_template(self) -> PromptTemplate:
+        return PromptTemplate(
+            template=self.prompt,
+            input_variables=["ml_book_home_pages"]
+        )
+
 """
 - Claridad: Sé directo y sin ambigüedades en lo que pedís
 - Estructura: Dividí tu prompt en partes (información, comportamiento, etc.)

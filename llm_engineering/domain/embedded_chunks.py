@@ -22,7 +22,6 @@ class EmbeddedChunk(VectorBaseDocument, ABC):
             Chunk {i + 1}:
             Type: {chunk.__class__.__name__}
             Platform: {chunk.platform}
-            Author: {chunk.author_full_name}
             Content: {chunk.content}\n
             """
 
@@ -32,6 +31,8 @@ class EmbeddedChunk(VectorBaseDocument, ABC):
 class EmbeddedTranscriptionChunk(EmbeddedChunk):
     name: str
     filepath: str
+    topics: list[str]
+    tools: list[str]
 
     class Config:
         name = "embedded_transcription"
@@ -42,7 +43,8 @@ class EmbeddedTranscriptionChunk(EmbeddedChunk):
 class EmbeddedMLBookChunk(EmbeddedChunk):
     filepath: str
     name: str
-    author: str
+    author: list[str]
+    topics: list[str]
 
     class Config:
         name = "embedded_ml_book"
