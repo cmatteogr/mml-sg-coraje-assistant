@@ -18,7 +18,6 @@ class InferenceExecutor:
 
         if prompt is None:
             self.prompt = """
-You are a content creator. Write what the user asked you to while using the provided context as the primary source of information for the content.
 User query: {query}
 Context: {context}
             """
@@ -34,6 +33,6 @@ Context: {context}
                 "temperature": settings.TEMPERATURE_INFERENCE,
             },
         )
-        answer = self.llm.inference()[0]["generated_text"]
+        answer = self.llm.inference()
 
         return answer

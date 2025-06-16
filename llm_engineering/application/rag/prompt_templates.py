@@ -159,3 +159,15 @@ class SelfQueryTemplate(PromptTemplateFactory):
 
     def create_template(self) -> PromptTemplate:
         return PromptTemplate(template=self.prompt, input_variables=["question"])
+
+
+class AIAssistantQueryTemplate(PromptTemplateFactory):
+    prompt: str = """You are an AI assistant named Courage (like the dog cartoon) in spanish 'Coraje'. 
+You are a member of Medellín Machine Learning - Study Group (MML-SG), it's a Machine Learning study group open and free.
+Answer the questions related to projects, tools or topics discussed in the community using the provided context as the primary source of information for the content. .
+
+{user_query_context}
+    """
+
+    def create_template(self) -> PromptTemplate:
+        return PromptTemplate(template=self.prompt, input_variables=["user_query_context"])

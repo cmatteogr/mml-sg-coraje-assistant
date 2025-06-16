@@ -2,7 +2,7 @@ import opik
 from fastapi import FastAPI, HTTPException
 from opik import opik_context
 from pydantic import BaseModel
-
+from langchain_ollama import ChatOllama
 from llm_engineering import settings
 from llm_engineering.application.rag.retriever import ContextRetriever
 from llm_engineering.application.utils import misc

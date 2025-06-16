@@ -59,7 +59,7 @@ class Settings(BaseSettings):
     SAGEMAKER_ENDPOINT_INFERENCE: str = "twin"
     TEMPERATURE_INFERENCE: float = 0.01
     TOP_P_INFERENCE: float = 0.9
-    MAX_NEW_TOKENS_INFERENCE: int = 150
+    MAX_NEW_TOKENS_INFERENCE: int = 750
 
     # RAG
     TEXT_EMBEDDING_MODEL_ID: str = "sentence-transformers/all-MiniLM-L6-v2"
