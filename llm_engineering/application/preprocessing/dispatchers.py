@@ -6,7 +6,8 @@ from llm_engineering.domain.types import DataCategory
 from .chunking_data_handlers import (
     ChunkingDataHandler,
     MLBookChunkingHandler,
-    TranscriptionChunkingHandler
+    TranscriptionChunkingHandler,
+    GithubCodeChunkingHandler
 )
 from .translation_data_handlers import (
     TranslationDataHandler,
@@ -132,6 +133,8 @@ class ChunkingHandlerFactory:
             return MLBookChunkingHandler()
         elif data_category == DataCategory.MEETING_TRANSCRIPTION:
             return TranscriptionChunkingHandler()
+        elif data_category == DataCategory.GITHUB_CODE:
+            return GithubCodeChunkingHandler()
         else:
             raise ValueError("Unsupported data type")
 

@@ -58,6 +58,7 @@ class EmbeddedGithubCodeChunk(EmbeddedChunk):
     project_path: str
     project_url: str
     sha: str
+    repo: str
 
     class Config:
         name = "embedded_github_code"

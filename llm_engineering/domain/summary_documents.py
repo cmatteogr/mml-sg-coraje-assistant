@@ -38,6 +38,7 @@ class SummaryGithubDocument(SummaryDocument):
     project_path: str
     project_url: str
     sha: str
+    repo: str
 
     class Config:
         name = "summary_github_code"

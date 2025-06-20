@@ -115,6 +115,7 @@ class GithubCodeEmbeddingHandler(EmbeddingDataHandler):
             project_path=data_model.project_path,
             project_url=data_model.project_url,
             sha=data_model.sha,
+            repo=data_model.repo,
             metadata={
                 "embedding_model_id": embedding_model.model_id,
                 "embedding_size": embedding_model.embedding_size,

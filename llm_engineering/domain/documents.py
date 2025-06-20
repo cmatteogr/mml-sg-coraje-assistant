@@ -30,6 +30,7 @@ class GithubCodeDocument(Document):
     project_path: str
     project_url: str
     sha: str
+    repo: str
 
     class Settings:
         name = DataCategory.GITHUB_CODE

@@ -29,7 +29,7 @@ class CleanedMLBookDocument(CleanedDocument):
         use_vector_index = False
 
 
-class GithubCodeDocument(CleanedDocument):
+class CleanedGithubCodeDocument(CleanedDocument):
     filepath: str
     name: str
     project_path: str

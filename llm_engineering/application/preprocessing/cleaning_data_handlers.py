@@ -5,7 +5,7 @@ from llm_engineering.domain.cleaned_documents import (
     CleanedDocument,
     CleanedMLBookDocument,
     CleanedTranscriptionDocument,
-    GithubCodeDocument
+    CleanedGithubCodeDocument
 )
 from llm_engineering.domain.documents import (
     Document,
@@ -53,8 +53,8 @@ class TranscriptionCleaningHandler(CleaningDataHandler):
 
 
 class GithubCodeCleaningHandler(CleaningDataHandler):
-    def clean(self, data_model: GithubCodeDocument) -> GithubCodeDocument:
-        return GithubCodeDocument(
+    def clean(self, data_model: GithubCodeDocument) -> CleanedGithubCodeDocument:
+        return CleanedGithubCodeDocument(
             id=data_model.id,
             content=clean_text(data_model.content),
             platform=data_model.platform,
@@ -63,4 +63,5 @@ class GithubCodeCleaningHandler(CleaningDataHandler):
             project_path=data_model.project_path,
             project_url=data_model.project_url,
             sha=data_model.sha,
+            repo=data_model.repo,
         )

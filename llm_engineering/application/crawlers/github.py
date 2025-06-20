@@ -38,7 +38,8 @@ class GithubCodeCrawler(BaseLocalCrawler):
                                   name=full_name,
                                   project_path= element_content['path'],
                                   project_url= element_content['url'],
-                                  sha= element_content['sha'])
+                                  sha= element_content['sha'],
+                                  repo=link)
             instance.save()
 
         logger.info(f"Finished scrapping data for Github code: {link}")

@@ -79,5 +79,6 @@ class GithubCodeSummaryHandler(SummaryDataHandler):
             name=data_model.name,
             project_path=data_model.project_path,
             project_url=data_model.project_url,
-            sha=data_model.sha
+            sha=data_model.sha,
+            repo = data_model.repo
         )
