@@ -31,3 +31,15 @@ class SummaryMLBookDocument(SummaryDocument):
         name = "summary_ml_book"
         category = DataCategory.ML_BOOK
         use_vector_index = False
+
+class SummaryGithubDocument(SummaryDocument):
+    filepath: str
+    name: str
+    project_path: str
+    project_url: str
+    sha: str
+
+    class Config:
+        name = "summary_github_code"
+        category = DataCategory.GITHUB_CODE
+        use_vector_index = False

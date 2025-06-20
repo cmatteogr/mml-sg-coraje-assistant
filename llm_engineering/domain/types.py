@@ -12,4 +12,4 @@ class DataCategory(StrEnum):
 
     MEETING_TRANSCRIPTION = "meeting_transcription"
     ML_BOOK = "ml_book"
-    GITHUB = "github_code"
+    GITHUB_CODE = "github_code"

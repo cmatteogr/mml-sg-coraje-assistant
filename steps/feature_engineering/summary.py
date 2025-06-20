@@ -5,7 +5,7 @@ from llm_engineering.domain.summary_documents import SummaryDocument
 
 
 def summary_documents(
-    documents: Annotated[list, "raw_documents"],
+    documents: Annotated[list, "cleaned_documents"],
 ) -> Annotated[list, "summary_documents"]:
     summary_documents = []
     for document in documents:

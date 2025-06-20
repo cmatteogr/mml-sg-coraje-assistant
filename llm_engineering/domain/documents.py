@@ -32,4 +32,4 @@ class GithubCodeDocument(Document):
     sha: str
 
     class Settings:
-        name = DataCategory.GITHUB
+        name = DataCategory.GITHUB_CODE

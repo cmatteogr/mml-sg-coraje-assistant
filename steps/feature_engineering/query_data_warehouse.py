@@ -2,28 +2,30 @@ from concurrent.futures import ThreadPoolExecutor, as_completed
 from loguru import logger
 from typing_extensions import Annotated
 from llm_engineering.domain.base.nosql import NoSQLBaseDocument
-from llm_engineering.domain.documents import Document, MLBookDocument, TranscriptionDocument
+from llm_engineering.domain.documents import Document, MLBookDocument, TranscriptionDocument, GithubCodeDocument
 
 
 
 def query_data_warehouse(
     ml_book_names: list[str],
     transcription_names: list[str],
+    github_codes_names: list[str],
 ) -> Annotated[list, "raw_documents"]:
     documents = []
 
-    results = fetch_all_data(ml_book_names, transcription_names)
+    results = fetch_all_data(ml_book_names, transcription_names, github_codes_names)
     user_documents = [doc for query_result in results.values() for doc in query_result]
     documents.extend(user_documents)
 
     return documents
 
 
-def fetch_all_data(ml_book_names: list[str], transcription_names: list[str]) -> dict[str, list[NoSQLBaseDocument]]:
+def fetch_all_data(ml_book_names: list[str], transcription_names: list[str],  github_codes_names: list[str]) -> dict[str, list[NoSQLBaseDocument]]:
     with ThreadPoolExecutor() as executor:
         future_to_query = {
             executor.submit(__fetch_ml_books, ml_book_names): "ml_books",
-            executor.submit(__fetch_transcriptions, transcription_names): "transcriptions"
+            executor.submit(__fetch_transcriptions, transcription_names): "transcriptions",
+            executor.submit(__fetch_github_codes, github_codes_names): "github_codes"
         }
 
         results = {}
@@ -46,6 +48,9 @@ def __fetch_ml_books(names) -> list[NoSQLBaseDocument]:
 def __fetch_transcriptions(names) -> list[NoSQLBaseDocument]:
     return TranscriptionDocument.bulk_find(name={"$in": names})
 
+
+def __fetch_github_codes(names) -> list[NoSQLBaseDocument]:
+    return GithubCodeDocument.bulk_find(name={"$in": names})
 
 
 def _get_metadata(documents: list[Document]) -> dict:

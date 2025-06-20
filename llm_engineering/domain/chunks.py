@@ -33,3 +33,14 @@ class MLBookChunk(Chunk):
 
     class Config:
         category = DataCategory.ML_BOOK
+
+
+class GithubCodeChunk(Chunk):
+    filepath: str
+    name: str
+    project_path: str
+    project_url: str
+    sha: str
+
+    class Config:
+        category = DataCategory.GITHUB_CODE

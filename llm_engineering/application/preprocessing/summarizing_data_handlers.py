@@ -4,29 +4,31 @@ import time
 from llm_engineering.domain.summary_documents import (
     SummaryDocument,
     SummaryMLBookDocument,
-    SummaryTranscriptionDocument
+    SummaryTranscriptionDocument,
+    SummaryGithubDocument
 )
 from llm_engineering.domain.documents import (
     Document,
     MLBookDocument,
-    TranscriptionDocument
+    TranscriptionDocument,
+    GithubCodeDocument
 )
 
 from .operations.summarizing import summarize_transcription_text, summarize_transcription_extract_metadata_text, \
     summarize_ml_book_home_pages_text
 
 DocumentT = TypeVar("DocumentT", bound=Document)
-TranslatedDocumentT = TypeVar("SummaryDocumentT", bound=SummaryDocument)
+SummaryDocumentT = TypeVar("SummaryDocumentT", bound=SummaryDocument)
 
 
-class SummaryDataHandler(ABC, Generic[DocumentT, TranslatedDocumentT]):
+class SummaryDataHandler(ABC, Generic[DocumentT, SummaryDocumentT]):
     """
     Abstract class for all cleaning data handlers.
     All data transformations logic for the cleaning step is done here
     """
 
     @abstractmethod
-    def summary(self, data_model: DocumentT) -> TranslatedDocumentT:
+    def summary(self, data_model: DocumentT) -> SummaryDocumentT:
         pass
 
 class MLBookSummaryHandler(SummaryDataHandler):
@@ -61,4 +63,21 @@ class TranscriptionSummaryHandler(SummaryDataHandler):
             filepath=data_model.filepath,
             topics=transcription_metadata['topics'],
             tools=transcription_metadata['tools']
+        )
+
+class GithubCodeSummaryHandler(SummaryDataHandler):
+    def summary(self, data_model: GithubCodeDocument) -> SummaryGithubDocument:
+        home_pages_n_characters = 17000
+        ml_book_home_pages = data_model.content[:home_pages_n_characters]
+        ml_book_metadata = summarize_ml_book_home_pages_text(ml_book_home_pages)
+        time.sleep(20)
+        return SummaryGithubDocument(
+            id=data_model.id,
+            content=data_model.content,
+            platform=data_model.platform,
+            filepath=data_model.filepath,
+            name=data_model.name,
+            project_path=data_model.project_path,
+            project_url=data_model.project_url,
+            sha=data_model.sha
         )

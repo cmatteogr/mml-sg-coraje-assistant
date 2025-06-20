@@ -4,11 +4,12 @@ from typing import Generic, TypeVar, cast
 from IPython.core.release import author
 
 from llm_engineering.application.networks import EmbeddingModelSingleton
-from llm_engineering.domain.chunks import Chunk, TranscriptionChunk, MLBookChunk
+from llm_engineering.domain.chunks import Chunk, TranscriptionChunk, MLBookChunk, GithubCodeChunk
 from llm_engineering.domain.embedded_chunks import (
     EmbeddedChunk,
     EmbeddedMLBookChunk,
     EmbeddedTranscriptionChunk,
+    EmbeddedGithubCodeChunk
 )
 from llm_engineering.domain.queries import EmbeddedQuery, Query
 
@@ -93,6 +94,27 @@ class TranscriptionEmbeddingHandler(EmbeddingDataHandler):
             filepath=data_model.filepath,
             topics=data_model.topics,
             tools=data_model.tools,
+            metadata={
+                "embedding_model_id": embedding_model.model_id,
+                "embedding_size": embedding_model.embedding_size,
+                "max_input_length": embedding_model.max_input_length,
+            },
+        )
+
+
+class GithubCodeEmbeddingHandler(EmbeddingDataHandler):
+    def map_model(self, data_model: GithubCodeChunk, embedding: list[float]) -> EmbeddedGithubCodeChunk:
+        return EmbeddedGithubCodeChunk(
+            id=data_model.id,
+            content=data_model.content,
+            embedding=embedding,
+            platform=data_model.platform,
+            document_id=data_model.document_id,
+            name=data_model.name,
+            filepath=data_model.filepath,
+            project_path=data_model.project_path,
+            project_url=data_model.project_url,
+            sha=data_model.sha,
             metadata={
                 "embedding_model_id": embedding_model.model_id,
                 "embedding_size": embedding_model.embedding_size,

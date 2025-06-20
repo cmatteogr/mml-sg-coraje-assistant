@@ -5,7 +5,7 @@ from llm_engineering.domain.cleaned_documents import CleanedDocument
 
 
 def clean_documents(
-    documents: Annotated[list, "translated_documents"],
+    documents: Annotated[list, "raw_documents"],
 ) -> Annotated[list, "cleaned_documents"]:
     cleaned_documents = []
     for document in documents:

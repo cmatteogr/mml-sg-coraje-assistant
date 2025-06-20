@@ -27,3 +27,16 @@ class CleanedMLBookDocument(CleanedDocument):
         name = "cleaned_ml_book"
         category = DataCategory.ML_BOOK
         use_vector_index = False
+
+
+class GithubCodeDocument(CleanedDocument):
+    filepath: str
+    name: str
+    project_path: str
+    project_url: str
+    sha: str
+
+    class Config:
+        name = "cleaned_github_code"
+        category = DataCategory.GITHUB_CODE
+        use_vector_index = False

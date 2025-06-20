@@ -50,3 +50,16 @@ class EmbeddedMLBookChunk(EmbeddedChunk):
         name = "embedded_ml_book"
         category = DataCategory.ML_BOOK
         use_vector_index = True
+
+
+class EmbeddedGithubCodeChunk(EmbeddedChunk):
+    filepath: str
+    name: str
+    project_path: str
+    project_url: str
+    sha: str
+
+    class Config:
+        name = "embedded_github_code"
+        category = DataCategory.GITHUB_CODE
+        use_vector_index = True

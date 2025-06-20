@@ -16,18 +16,21 @@ from .translation_data_handlers import (
 from .cleaning_data_handlers import (
     CleaningDataHandler,
     MLBookCleaningHandler,
-    TranscriptionCleaningHandler
+    TranscriptionCleaningHandler,
+    GithubCodeCleaningHandler
 )
 from .summarizing_data_handlers import (
     SummaryDataHandler,
     MLBookSummaryHandler,
-    TranscriptionSummaryHandler
+    TranscriptionSummaryHandler,
+    GithubCodeSummaryHandler
 )
 from .embedding_data_handlers import (
     EmbeddingDataHandler,
     QueryEmbeddingHandler,
     TranscriptionEmbeddingHandler,
-    MLBookEmbeddingHandler
+    MLBookEmbeddingHandler,
+    GithubCodeEmbeddingHandler
 )
 
 
@@ -67,6 +70,8 @@ class CleaningHandlerFactory:
             return MLBookCleaningHandler()
         elif data_category == DataCategory.MEETING_TRANSCRIPTION:
             return TranscriptionCleaningHandler()
+        elif data_category == DataCategory.GITHUB_CODE:
+            return GithubCodeCleaningHandler()
         else:
             raise ValueError("Unsupported data type")
 
@@ -96,6 +101,8 @@ class SummaryHandlerFactory:
             return MLBookSummaryHandler()
         elif data_category == DataCategory.MEETING_TRANSCRIPTION:
             return TranscriptionSummaryHandler()
+        elif data_category == DataCategory.GITHUB_CODE:
+            return GithubCodeSummaryHandler()
         else:
             raise ValueError("Unsupported data type")
 
@@ -156,6 +163,8 @@ class EmbeddingHandlerFactory:
             return MLBookEmbeddingHandler()
         elif data_category == DataCategory.MEETING_TRANSCRIPTION:
             return TranscriptionEmbeddingHandler()
+        elif data_category == DataCategory.GITHUB_CODE:
+            return GithubCodeEmbeddingHandler()
         else:
             raise ValueError("Unsupported data type")
 
