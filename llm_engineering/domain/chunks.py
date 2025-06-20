@@ -41,6 +41,7 @@ class GithubCodeChunk(Chunk):
     project_path: str
     project_url: str
     sha: str
+    repo: str
 
     class Config:
         category = DataCategory.GITHUB_CODE

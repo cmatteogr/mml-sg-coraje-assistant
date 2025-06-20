@@ -62,6 +62,6 @@ class GithubCodeCleaningHandler(CleaningDataHandler):
             filepath=data_model.filepath,
             project_path=data_model.project_path,
             project_url=data_model.project_url,
-            sha=data_model.sha,
             repo=data_model.repo,
+            sha=data_model.sha,
         )

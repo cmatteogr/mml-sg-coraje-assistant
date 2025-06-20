@@ -35,6 +35,7 @@ class CleanedGithubCodeDocument(CleanedDocument):
     project_path: str
     project_url: str
     sha: str
+    repo: str
 
     class Config:
         name = "cleaned_github_code"

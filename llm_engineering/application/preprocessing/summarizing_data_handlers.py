@@ -67,10 +67,6 @@ class TranscriptionSummaryHandler(SummaryDataHandler):
 
 class GithubCodeSummaryHandler(SummaryDataHandler):
     def summary(self, data_model: GithubCodeDocument) -> SummaryGithubDocument:
-        home_pages_n_characters = 17000
-        ml_book_home_pages = data_model.content[:home_pages_n_characters]
-        ml_book_metadata = summarize_ml_book_home_pages_text(ml_book_home_pages)
-        time.sleep(20)
         return SummaryGithubDocument(
             id=data_model.id,
             content=data_model.content,
@@ -80,5 +76,5 @@ class GithubCodeSummaryHandler(SummaryDataHandler):
             project_path=data_model.project_path,
             project_url=data_model.project_url,
             sha=data_model.sha,
-            repo = data_model.repo
+            repo=data_model.repo
         )
