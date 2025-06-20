@@ -108,7 +108,9 @@ class GithubCodeChunkingHandler(ChunkingDataHandler):
         data_models_list = []
 
         cleaned_content = data_model.content
-        chunks = chunk_header_chunk(cleaned_content)
+        chunks = chunk_text(
+            cleaned_content, chunk_size=self.metadata["chunk_size"], chunk_overlap=self.metadata["chunk_overlap"]
+        )
 
         for chunk in chunks:
             chunk_id = hashlib.md5(chunk.encode()).hexdigest()
