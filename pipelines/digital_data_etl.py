@@ -70,5 +70,15 @@ links = [
     ('transcription', '24. Understanding Graph Embedding and Profiling Cyberattacks (2024_09_18 18_59 COT).txt'),
     ('transcription', '25. Graph Embeddings Introduction (2024-10-02 19_09 GMT-5).txt'),
     ('transcription', '26. Community Detection Introduction (2024-10-09 19_09 GMT-5).txt'),
+
+    ('github_code', 'cmatteogr/cars_anomaly_detection_autoencoder'),
+    ('github_code', 'cmatteogr/cars_ml_project'),
+    ('github_code', 'cmatteogr/cars_model_deployment'),
+    ('github_code', 'cmatteogr/cars_scrapy'),
+    ('github_code', 'cmatteogr/generative-ml-malicious-traffic-wolf-in-sheeps-clothes'),
+    ('github_code', 'cmatteogr/graph_attack_defend_games_ml'),
+    ('github_code', 'cmatteogr/medellin_ai_autoencoder_anomaly_detection'),
+    ('github_code', 'cmatteogr/mml-sg-coraje-assistant'),
 ]
+
 digital_data_etl(links)

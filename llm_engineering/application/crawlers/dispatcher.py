@@ -2,6 +2,7 @@ from .base import BaseCrawler
 from .custom_article import CustomArticleCrawler
 from .ml_book import MLBookCrawler
 from .transcription import TranscriptionCrawler
+from .github import GithubCodeCrawler
 
 
 class CrawlerDispatcher:
@@ -21,6 +22,11 @@ class CrawlerDispatcher:
 
     def register_ml_book(self) -> "CrawlerDispatcher":
         self.register("ml_books", MLBookCrawler)
+
+        return self
+
+    def register_github_code(self) -> "CrawlerDispatcher":
+        self.register("github_code", GithubCodeCrawler)
 
         return self
 

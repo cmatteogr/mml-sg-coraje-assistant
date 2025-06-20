@@ -22,3 +22,14 @@ class MLBookDocument(Document):
 
     class Settings:
         name = DataCategory.ML_BOOK
+
+
+class GithubCodeDocument(Document):
+    filepath: str
+    name: str
+    project_path: str
+    project_url: str
+    sha: str
+
+    class Settings:
+        name = DataCategory.GITHUB
