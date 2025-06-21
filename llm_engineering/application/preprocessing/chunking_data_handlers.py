@@ -109,8 +109,6 @@ class GithubCodeChunkingHandler(ChunkingDataHandler):
         """
         Parses a Python file and extracts all top-level code chunks,
         """
-        #source_code = source_code.replace("'", "\'")
-        print('source_code', source_code)
         tree = ast.parse(source_code)
 
         all_chunks = []
@@ -198,7 +196,6 @@ class GithubCodeChunkingHandler(ChunkingDataHandler):
         # define chunk text strategy based on file extension
         match extension_file:
             case '.py':
-                print(data_model.project_path)
                 fun_class_dict = self.extract_all_code_chunks(cleaned_content)
                 chunks = self.chunk_code_text(fun_class_dict, data_model.project_path)
             case '.md':
