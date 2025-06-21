@@ -1,8 +1,4 @@
-from pydoc_data.topics import topics
-
-from diskcache.core import full_name
 from loguru import logger
-
 from .base import BaseLocalCrawler
 import os
 from llm_engineering.domain.documents import GithubCodeDocument
@@ -25,6 +21,11 @@ class GithubCodeCrawler(BaseLocalCrawler):
 
         # for each document in the repo
         for element_name, element_content in repo_content.items():
+            # get extension file, valid extension
+            extension_file = os.path.splitext(element_name)[-1]
+            if extension_file not in ['.py', '.ipynb', '.md', '.html', '.txt']:
+                continue
+
             full_name = link + '/' + element_name
 
             old_model = self.model.find(name=full_name)

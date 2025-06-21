@@ -8,7 +8,7 @@ from llm_engineering.model.inference.run import InferenceExecutor
 from llm_engineering.settings import settings
 
 if __name__ == "__main__":
-    text = "Introduce yourself"
+    text = "Can you list the projects developed in MML-SG and their github repositories names?"
     logger.info(f"Running inference for text: '{text}'")
 
     retriever = ContextRetriever(mock=False)

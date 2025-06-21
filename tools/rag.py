@@ -9,7 +9,7 @@ if __name__ == "__main__":
     set_verbose(True)
 
     query = """
-        What is MML-SG?
+        Can you list the projects created in MML-SG?
         """
 
     retriever = ContextRetriever(mock=False)
