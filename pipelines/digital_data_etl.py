@@ -8,7 +8,7 @@ def digital_data_etl(links: list[Tuple[str, str]]) -> str:
     # return last_step.invocation_id
 
 
-links = [
+"""links = [
     ('ml_books', 'A Practical Outlier Detection Approach for Mixed Attibute Data.pdf'),
     ('ml_books', 'Bagging Predictors.pdf'),
     ('ml_books', 'Daily Dose Of Data Science Full Archive.pdf'),
@@ -87,14 +87,24 @@ links = [
     ('transcription', '41. Beta - Total Correlational Variarional Autoencoder, theory, code, training challenges, inference, results - MML-SG Training - 2025_05_21 19_00 GMT-05_00 - Recording.txt'),
     ('transcription', '42. Generative Model for Malicious Traffic, The Wolf in Sheeps Clothing - MML-SG Training - 2025_06_04 18_59 GMT-05_00 - Recording.txt'),
 
-    #('github_code', 'cmatteogr/cars_anomaly_detection_autoencoder'),
-    #('github_code', 'cmatteogr/cars_ml_project'),
-    #('github_code', 'cmatteogr/cars_model_deployment'),
-    #('github_code', 'cmatteogr/cars_scrapy'),
-    #('github_code', 'cmatteogr/generative-ml-malicious-traffic-wolf-in-sheeps-clothes'),
-    #('github_code', 'cmatteogr/graph_attack_defend_games_ml'),
-    #('github_code', 'cmatteogr/medellin_ai_autoencoder_anomaly_detection'),
-    #('github_code', 'cmatteogr/mml-sg-coraje-assistant'),
+    ('github_code', 'cmatteogr/cars_anomaly_detection_autoencoder'),
+    ('github_code', 'cmatteogr/cars_ml_project'),
+    ('github_code', 'cmatteogr/cars_model_deployment'),
+    ('github_code', 'cmatteogr/cars_scrapy'),
+    ('github_code', 'cmatteogr/generative-ml-malicious-traffic-wolf-in-sheeps-clothes'),
+    ('github_code', 'cmatteogr/graph_attack_defend_games_ml'),
+    ('github_code', 'cmatteogr/medellin_ai_autoencoder_anomaly_detection'),
+    ('github_code', 'cmatteogr/mml-sg-coraje-assistant'),
+
+    ('mml_sg_base', 'mml_sg_about.txt'),
+    ('mml_sg_base', 'mml_sg_characters.txt'),
+]"""
+
+
+links = [
+    ('mml_sg_base', 'mml_sg_about.txt'),
+    ('mml_sg_base', 'mml_sg_characters.txt'),
 ]
+
 
 digital_data_etl(links)

@@ -1,6 +1,7 @@
 from .base import BaseCrawler
 from .custom_article import CustomArticleCrawler
 from .ml_book import MLBookCrawler
+from .mml_sg_base import MMLSGBaseCrawler
 from .transcription import TranscriptionCrawler
 from .github_code import GithubCodeCrawler
 
@@ -27,6 +28,11 @@ class CrawlerDispatcher:
 
     def register_github_code(self) -> "CrawlerDispatcher":
         self.register("github_code", GithubCodeCrawler)
+
+        return self
+
+    def register_mml_sg_base(self) -> "CrawlerDispatcher":
+        self.register("mml_sg_base", MMLSGBaseCrawler)
 
         return self
 

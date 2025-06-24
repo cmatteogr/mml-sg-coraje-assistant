@@ -13,3 +13,4 @@ class DataCategory(StrEnum):
     MEETING_TRANSCRIPTION = "meeting_transcription"
     ML_BOOK = "ml_book"
     GITHUB_CODE = "github_code"
+    MML_SG_BASE = "mml_sg_base"

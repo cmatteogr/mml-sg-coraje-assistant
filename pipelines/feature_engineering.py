@@ -5,14 +5,15 @@ from llm_engineering.domain.documents import MLBookDocument, TranscriptionDocume
 
 def feature_engineering() -> list[str]:
     raw_ml_book_documents = MLBookDocument.bulk_find()
-    raw_ml_book_documents_names = list(map(lambda x: x.name, raw_ml_book_documents))
+    #raw_ml_book_documents_names = list(map(lambda x: x.name, raw_ml_book_documents))
+    raw_ml_book_documents_names = []
 
     raw_transcription_documents = TranscriptionDocument.bulk_find()
     raw_transcription_documents_names = list(map(lambda x: x.name, raw_transcription_documents))
 
     raw_github_code_documents = GithubCodeDocument.bulk_find()
-    raw_github_code_documents_names = list(map(lambda x: x.name, raw_github_code_documents))
-
+    # raw_github_code_documents_names = list(map(lambda x: x.name, raw_github_code_documents))
+    raw_github_code_documents_names=[]
 
     raw_documents = fe_steps.query_data_warehouse(raw_ml_book_documents_names,
                                                   raw_transcription_documents_names,

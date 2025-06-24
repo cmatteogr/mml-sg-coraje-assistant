@@ -7,7 +7,7 @@ from llm_engineering.application.crawlers.dispatcher import CrawlerDispatcher
 
 
 def crawl_links(links: list[Tuple[str, str]]) -> Annotated[list[str], "crawled_links"]:
-    dispatcher = CrawlerDispatcher.build().register_transcription().register_ml_book().register_github_code()
+    dispatcher = CrawlerDispatcher.build().register_transcription().register_ml_book().register_github_code().register_mml_sg_base()
 
     logger.info(f"Starting to crawl {len(links)} link(s).")
 

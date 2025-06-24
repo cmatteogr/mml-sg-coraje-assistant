@@ -34,3 +34,10 @@ class GithubCodeDocument(Document):
 
     class Settings:
         name = DataCategory.GITHUB_CODE
+
+class MMLSGBaseDocument(Document):
+    filepath: str
+    name: str
+
+    class Settings:
+        name = DataCategory.MML_SG_BASE
