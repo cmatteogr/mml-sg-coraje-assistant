@@ -2,7 +2,7 @@ from .base import BaseCrawler
 from .custom_article import CustomArticleCrawler
 from .ml_book import MLBookCrawler
 from .transcription import TranscriptionCrawler
-from .github import GithubCodeCrawler
+from .github_code import GithubCodeCrawler
 
 
 class CrawlerDispatcher:
