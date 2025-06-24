@@ -45,3 +45,11 @@ class GithubCodeChunk(Chunk):
 
     class Config:
         category = DataCategory.GITHUB_CODE
+
+
+class MMLSGBaseChunk(Chunk):
+    name: str
+    filepath: str
+
+    class Config:
+        category = DataCategory.MML_SG_BASE

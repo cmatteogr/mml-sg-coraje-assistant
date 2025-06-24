@@ -7,7 +7,8 @@ from .chunking_data_handlers import (
     ChunkingDataHandler,
     MLBookChunkingHandler,
     TranscriptionChunkingHandler,
-    GithubCodeChunkingHandler
+    GithubCodeChunkingHandler,
+    MMLSGBaseChunkingHandler
 )
 from .translation_data_handlers import (
     TranslationDataHandler,
@@ -18,20 +19,23 @@ from .cleaning_data_handlers import (
     CleaningDataHandler,
     MLBookCleaningHandler,
     TranscriptionCleaningHandler,
-    GithubCodeCleaningHandler
+    GithubCodeCleaningHandler,
+    MMLSGBaseCleaningHandler
 )
 from .summarizing_data_handlers import (
     SummaryDataHandler,
     MLBookSummaryHandler,
     TranscriptionSummaryHandler,
-    GithubCodeSummaryHandler
+    GithubCodeSummaryHandler,
+    MMLSGBaseSummaryHandler
 )
 from .embedding_data_handlers import (
     EmbeddingDataHandler,
     QueryEmbeddingHandler,
     TranscriptionEmbeddingHandler,
     MLBookEmbeddingHandler,
-    GithubCodeEmbeddingHandler
+    GithubCodeEmbeddingHandler,
+    MMLSGBaseEmbeddingHandler
 )
 
 
@@ -73,6 +77,8 @@ class CleaningHandlerFactory:
             return TranscriptionCleaningHandler()
         elif data_category == DataCategory.GITHUB_CODE:
             return GithubCodeCleaningHandler()
+        elif data_category == DataCategory.MML_SG_BASE:
+            return MMLSGBaseCleaningHandler()
         else:
             raise ValueError("Unsupported data type")
 
@@ -104,6 +110,8 @@ class SummaryHandlerFactory:
             return TranscriptionSummaryHandler()
         elif data_category == DataCategory.GITHUB_CODE:
             return GithubCodeSummaryHandler()
+        elif data_category == DataCategory.MML_SG_BASE:
+            return MMLSGBaseSummaryHandler()
         else:
             raise ValueError("Unsupported data type")
 
@@ -135,6 +143,8 @@ class ChunkingHandlerFactory:
             return TranscriptionChunkingHandler()
         elif data_category == DataCategory.GITHUB_CODE:
             return GithubCodeChunkingHandler()
+        elif data_category == DataCategory.MML_SG_BASE:
+            return MMLSGBaseChunkingHandler()
         else:
             raise ValueError("Unsupported data type")
 
@@ -168,6 +178,8 @@ class EmbeddingHandlerFactory:
             return TranscriptionEmbeddingHandler()
         elif data_category == DataCategory.GITHUB_CODE:
             return GithubCodeEmbeddingHandler()
+        elif data_category == DataCategory.MML_SG_BASE:
+            return MMLSGBaseEmbeddingHandler()
         else:
             raise ValueError("Unsupported data type")
 

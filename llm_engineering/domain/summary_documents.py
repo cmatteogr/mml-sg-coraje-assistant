@@ -44,3 +44,12 @@ class SummaryGithubDocument(SummaryDocument):
         name = "summary_github_code"
         category = DataCategory.GITHUB_CODE
         use_vector_index = False
+
+class SummaryMMLSGBaseDocument(SummaryDocument):
+    name: str
+    filepath: str
+
+    class Config:
+        name = "summary_mml_sg_base"
+        category = DataCategory.MML_SG_BASE
+        use_vector_index = False

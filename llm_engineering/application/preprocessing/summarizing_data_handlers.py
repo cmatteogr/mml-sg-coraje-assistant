@@ -5,13 +5,15 @@ from llm_engineering.domain.summary_documents import (
     SummaryDocument,
     SummaryMLBookDocument,
     SummaryTranscriptionDocument,
-    SummaryGithubDocument
+    SummaryGithubDocument,
+    SummaryMMLSGBaseDocument
 )
 from llm_engineering.domain.documents import (
     Document,
     MLBookDocument,
     TranscriptionDocument,
-    GithubCodeDocument
+    GithubCodeDocument,
+    MMLSGBaseDocument
 )
 
 from .operations.summarizing import summarize_transcription_text, summarize_transcription_extract_metadata_text, \
@@ -77,4 +79,15 @@ class GithubCodeSummaryHandler(SummaryDataHandler):
             project_url=data_model.project_url,
             sha=data_model.sha,
             repo=data_model.repo
+        )
+
+
+class MMLSGBaseSummaryHandler(SummaryDataHandler):
+    def summary(self, data_model: MMLSGBaseDocument) -> SummaryMMLSGBaseDocument:
+        return SummaryMMLSGBaseDocument(
+            id=data_model.id,
+            content=data_model.content,
+            platform=data_model.platform,
+            name=data_model.name,
+            filepath=data_model.filepath
         )

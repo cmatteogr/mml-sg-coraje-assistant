@@ -64,3 +64,13 @@ class EmbeddedGithubCodeChunk(EmbeddedChunk):
         name = "embedded_github_code"
         category = DataCategory.GITHUB_CODE
         use_vector_index = True
+
+
+class EmbeddedMMLSGBaseChunk(EmbeddedChunk):
+    name: str
+    filepath: str
+
+    class Config:
+        name = "embedded_mml_sg_base"
+        category = DataCategory.MML_SG_BASE
+        use_vector_index = True

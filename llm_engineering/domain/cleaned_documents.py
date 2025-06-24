@@ -41,3 +41,13 @@ class CleanedGithubCodeDocument(CleanedDocument):
         name = "cleaned_github_code"
         category = DataCategory.GITHUB_CODE
         use_vector_index = False
+
+
+class CleanedMMLSGBaseDocument(CleanedDocument):
+    name: str
+    filepath: str
+
+    class Config:
+        name = "cleaned_mml_sg_base"
+        category = DataCategory.MML_SG_BASE
+        use_vector_index = False

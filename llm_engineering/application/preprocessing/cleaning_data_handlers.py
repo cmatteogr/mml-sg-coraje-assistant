@@ -5,13 +5,15 @@ from llm_engineering.domain.cleaned_documents import (
     CleanedDocument,
     CleanedMLBookDocument,
     CleanedTranscriptionDocument,
-    CleanedGithubCodeDocument
+    CleanedGithubCodeDocument,
+    CleanedMMLSGBaseDocument
 )
 from llm_engineering.domain.documents import (
     Document,
     MLBookDocument,
     TranscriptionDocument,
-    GithubCodeDocument
+    GithubCodeDocument,
+    MMLSGBaseDocument
 )
 
 from .operations import clean_text
@@ -64,4 +66,15 @@ class GithubCodeCleaningHandler(CleaningDataHandler):
             project_url=data_model.project_url,
             repo=data_model.repo,
             sha=data_model.sha,
+        )
+
+
+class MMLSGBaseCleaningHandler(CleaningDataHandler):
+    def clean(self, data_model: MMLSGBaseDocument) -> CleanedMMLSGBaseDocument:
+        return CleanedMMLSGBaseDocument(
+            id=data_model.id,
+            content=clean_text(data_model.content),
+            platform=data_model.platform,
+            name=data_model.name,
+            filepath=data_model.filepath,
         )

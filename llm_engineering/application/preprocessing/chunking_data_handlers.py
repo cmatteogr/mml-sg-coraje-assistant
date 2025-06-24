@@ -4,12 +4,13 @@ from typing import Generic, TypeVar
 from uuid import UUID
 import ast
 import os
-from llm_engineering.domain.chunks import Chunk, TranscriptionChunk, MLBookChunk, GithubCodeChunk
+from llm_engineering.domain.chunks import Chunk, TranscriptionChunk, MLBookChunk, GithubCodeChunk, MMLSGBaseChunk
 from llm_engineering.domain.cleaned_documents import (
     CleanedDocument,
     CleanedTranscriptionDocument,
     CleanedMLBookDocument,
-    CleanedGithubCodeDocument
+    CleanedGithubCodeDocument,
+    CleanedMMLSGBaseDocument
 )
 
 from .operations import chunk_text, chunk_header_chunk
@@ -218,6 +219,37 @@ class GithubCodeChunkingHandler(ChunkingDataHandler):
                 project_url=data_model.project_url,
                 sha=data_model.sha,
                 repo=data_model.repo,
+                metadata=self.metadata,
+            )
+            data_models_list.append(model)
+
+        return data_models_list
+
+
+class MMLSGBaseChunkingHandler(ChunkingDataHandler):
+
+    @property
+    def metadata(self) -> dict:
+        return {
+            "chunk_size": 500,
+            "chunk_overlap": 50,
+        }
+
+    def chunk(self, data_model: CleanedMMLSGBaseDocument) -> list[MMLSGBaseChunk]:
+        data_models_list = []
+
+        cleaned_content = data_model.content
+        chunks = chunk_header_chunk(cleaned_content)
+
+        for chunk in chunks:
+            chunk_id = hashlib.md5(chunk.encode()).hexdigest()
+            model = MMLSGBaseChunk(
+                id=UUID(chunk_id, version=4),
+                content=chunk,
+                platform=data_model.platform,
+                document_id=data_model.id,
+                name=data_model.name,
+                filepath=data_model.filepath,
                 metadata=self.metadata,
             )
             data_models_list.append(model)
