@@ -9,7 +9,7 @@ class Settings(BaseSettings):
 
     # --- Required settings even when working locally. ---
     # Ollama
-    OLLAMA_MODEL_ID: str = "deepseek-r1:14b"
+    OLLAMA_MODEL_ID: str = "deepseek-r1:32b"
 
     # OpenAI API
     OPENAI_MODEL_ID: str = "gpt-4o-mini"

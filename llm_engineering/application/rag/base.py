@@ -18,5 +18,5 @@ class RAGStep(ABC):
         self._mock = mock
 
     @abstractmethod
-    def generate(self, query: Query, *args, **kwargs) -> Any:
+    def generate(self, model, query: Query, *args, **kwargs) -> Any:
         pass

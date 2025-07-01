@@ -2,7 +2,7 @@ import json
 from typing import Any, Dict, Optional
 from langchain_ollama import ChatOllama
 from loguru import logger
-
+from opik.integrations.langchain import OpikTracer
 from llm_engineering.application.rag.prompt_templates import SelfQueryTemplate, AIAssistantQueryTemplate
 
 try:
@@ -21,12 +21,13 @@ class LLMInferenceLocal(Inference):
     """
 
     def __init__(
-        self
+        self, model_client
     ) -> None:
         super().__init__()
         self.payload = {
             'parameters':''
         }
+        self._model_client = model_client
 
     def set_payload(self, inputs: str, parameters: Optional[Dict[str, Any]] = None) -> None:
         """
@@ -49,13 +50,10 @@ class LLMInferenceLocal(Inference):
         Raises:
             Exception: If an error occurs during the inference request.
         """
-        prompt = AIAssistantQueryTemplate().create_template()
-        model = ChatOllama(model=settings.OLLAMA_MODEL_ID,
-                           temperature=self.payload["parameters"]['temperature'],
-                           num_predict=self.payload["parameters"]['max_new_tokens'],
-                           repeat_penalty=self.payload["parameters"]['repetition_penalty'])
 
-        chain = prompt | model
+        prompt = AIAssistantQueryTemplate().create_template()
+
+        chain = prompt | self._model_client
 
         response = chain.invoke({"user_query_context": self.payload["inputs"]})
         result = response.content

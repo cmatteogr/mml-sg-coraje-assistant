@@ -18,5 +18,5 @@ class Inference(ABC):
         pass
 
     @abstractmethod
-    def inference(self):
+    def inference(self, model):
         pass

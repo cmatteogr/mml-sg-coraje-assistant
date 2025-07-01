@@ -19,8 +19,9 @@ class InferenceExecutor:
         if prompt is None:
             self.prompt = """
 User query: {query}
-Context: {context}
-            """
+Context: 
+{context}
+"""
         else:
             self.prompt = prompt
 

@@ -7,7 +7,7 @@ from qdrant_client.models import FieldCondition, Filter, MatchValue
 from llm_engineering.application import utils
 from llm_engineering.application.preprocessing.dispatchers import EmbeddingDispatcher
 from llm_engineering.domain.embedded_chunks import (
-    EmbeddedChunk, EmbeddedTranscriptionChunk, EmbeddedMLBookChunk,
+    EmbeddedChunk, EmbeddedTranscriptionChunk, EmbeddedMLBookChunk, EmbeddedGithubCodeChunk, EmbeddedMMLSGBaseChunk,
 )
 from llm_engineering.domain.queries import EmbeddedQuery, Query
 
@@ -17,7 +17,8 @@ from .self_query import SelfQuery
 
 
 class ContextRetriever:
-    def __init__(self, mock: bool = False) -> None:
+    def __init__(self, model, mock: bool = False) -> None:
+        self._model = model
         self._query_expander = QueryExpansion(mock=mock)
         self._metadata_extractor = SelfQuery(mock=mock)
         self._reranker = Reranker(mock=mock)
@@ -26,14 +27,14 @@ class ContextRetriever:
     def search(
         self,
         query: str,
-        k: int = 3,
+        k: int = 15,
         expand_to_n_queries: int = 3,
     ) -> list:
         query_model = Query.from_str(query)
 
-        query_model = self._metadata_extractor.generate(query_model)
+        query_model = self._metadata_extractor.generate(self._model, query_model)
 
-        n_generated_queries = self._query_expander.generate(query_model, expand_to_n=expand_to_n_queries)
+        n_generated_queries = self._query_expander.generate(self._model, query_model, expand_to_n=expand_to_n_queries)
 
         with concurrent.futures.ThreadPoolExecutor() as executor:
             search_tasks = [executor.submit(self._search, _query_model, k) for _query_model in n_generated_queries]
@@ -81,9 +82,11 @@ class ContextRetriever:
         embedded_query: EmbeddedQuery = EmbeddingDispatcher.dispatch(query)
 
         transcription_chunks = _search_data_category(EmbeddedTranscriptionChunk, embedded_query)
-        ml_book_chunks = _search_data_category(EmbeddedMLBookChunk, embedded_query)
+        # ml_book_chunks = _search_data_category(EmbeddedMLBookChunk, embedded_query)
+        github_code_chunks = _search_data_category(EmbeddedGithubCodeChunk, embedded_query)
+        mml_sg_base_chunks = _search_data_category(EmbeddedMMLSGBaseChunk, embedded_query)
 
-        retrieved_chunks = transcription_chunks + ml_book_chunks
+        retrieved_chunks = transcription_chunks + github_code_chunks + mml_sg_base_chunks
 
         return retrieved_chunks
 

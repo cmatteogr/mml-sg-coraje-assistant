@@ -2,12 +2,24 @@ from langchain.prompts import PromptTemplate
 
 from .base import PromptTemplateFactory
 
+"""
+- Claridad: Sé directo y sin ambigüedades en lo que pedís
+- Estructura: Dividí tu prompt en partes (información, comportamiento, etc.)
+- Ejemplos: Agregá uno o dos ejemplos concretos del output esperado.
+- Rol asignado: Decile al modelo qué rol cumple (“Sos un profesor”)
+- Objetivo claro: Explicá qué querés lograr con la respuesta del modelo
+- Límites: Aclarale lo que no debe hacer (por ejemplo: no inventar datos)
+- Tono y estilo: Indicá cómo querés que suene (formal, técnico)
+"""
+
 class SummarizeMLTranscriptionTemplate(PromptTemplateFactory):
     prompt: str = """The following is a transcription from a Machine Learning meeting, 
     the members are part of a study group focused on developing Machine Learning projects from scratch.
     Maybe some details about the conversation/speak are missing because the content is a transcription of a virtual meeting, there isn't access to the video/images which are part of the meeting recording and sometimes the audio quality not good enough.
+    Clean the transcription if needed.
+    Identify the topics discussed through the meeting
     Summarize in detail the transcription extracting the relevant information; comments, ideas, explanations, projects descriptions,
-    etc. Clean the transcription if needed. The goal is use the transcription summary to know:
+    etc. . The goal is use the transcription summary to know:
     - Title: Meeting summary title.
     - Summary: Meeting summary description.
     - Topics: What is the mein topic and subtopics.
@@ -85,16 +97,6 @@ class SummarizeMLBookIndexTemplate(PromptTemplateFactory):
             template=self.prompt,
             input_variables=["ml_book_home_pages"]
         )
-
-"""
-- Claridad: Sé directo y sin ambigüedades en lo que pedís
-- Estructura: Dividí tu prompt en partes (información, comportamiento, etc.)
-- Ejemplos: Agregá uno o dos ejemplos concretos del output esperado.
-- Rol asignado: Decile al modelo qué rol cumple (“Sos un profesor”)
-- Objetivo claro: Explicá qué querés lograr con la respuesta del modelo
-- Límites: Aclarale lo que no debe hacer (por ejemplo: no inventar datos)
-- Tono y estilo: Indicá cómo querés que suene (formal, técnico)
-"""
 
 class QueryExpansionTemplate(PromptTemplateFactory):
     prompt: str = """You are an AI language model assistant. Your task is to generate {expand_to_n}

@@ -19,11 +19,11 @@ class EmbeddedChunk(VectorBaseDocument, ABC):
         context = ""
         for i, chunk in enumerate(chunks):
             context += f"""
-            Chunk {i + 1}:
-            Type: {chunk.__class__.__name__}
-            Platform: {chunk.platform}
-            Content: {chunk.content}\n
-            """
+Chunk {i + 1}:
+Type: {chunk.__class__.__name__}
+Platform: {chunk.platform}
+Content: {chunk.content}\n
+"""
 
         return context
 

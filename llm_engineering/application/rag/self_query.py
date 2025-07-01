@@ -8,20 +8,21 @@ from llm_engineering.settings import settings
 from .base import RAGStep
 from .prompt_templates import SelfQueryTemplate
 
-
 class SelfQuery(RAGStep):
     @opik.track(name="SelfQuery.generate")
-    def generate(self, query: Query) -> Query:
+    def generate(self, model, query: Query) -> Query:
         if self._mock:
             return query
 
         prompt = SelfQueryTemplate().create_template()
-        model = ChatOllama(model=settings.OLLAMA_MODEL_ID)
+
+        # model = ChatOllama(model=settings.OLLAMA_MODEL_ID)
 
         chain = prompt | model
 
         response = chain.invoke({"question": query})
 
+        logger.info(f"Response: {response}")
         result = response.content
 
         if result == "none":

@@ -4,14 +4,13 @@ from loguru import logger
 import json
 from llm_engineering.domain.queries import Query
 from llm_engineering.settings import settings
-
 from .base import RAGStep
 from .prompt_templates import QueryExpansionTemplate
 
 
 class QueryExpansion(RAGStep):
     @opik.track(name="QueryExpansion.generate")
-    def generate(self, query: Query, expand_to_n: int) -> list[Query]:
+    def generate(self, model, query: Query, expand_to_n: int) -> list[Query]:
         assert expand_to_n > 0, f"'expand_to_n' should be greater than 0. Got {expand_to_n}."
 
         if self._mock:
@@ -19,7 +18,8 @@ class QueryExpansion(RAGStep):
 
         query_expansion_template = QueryExpansionTemplate()
         prompt = query_expansion_template.create_template(expand_to_n - 1)
-        model = ChatOllama(model=settings.OLLAMA_MODEL_ID)
+
+        #model = ChatOllama(model=settings.OLLAMA_MODEL_ID)
 
         chain = prompt | model
 
