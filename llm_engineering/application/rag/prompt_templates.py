@@ -17,9 +17,7 @@ class SummarizeMLTranscriptionTemplate(PromptTemplateFactory):
     the members are part of a study group focused on developing Machine Learning projects from scratch.
     Maybe some details about the conversation/speak are missing because the content is a transcription of a virtual meeting, there isn't access to the video/images which are part of the meeting recording and sometimes the audio quality not good enough.
     Clean the transcription if needed.
-    Identify the topics discussed through the meeting
-    Summarize in detail the transcription extracting the relevant information; comments, ideas, explanations, projects descriptions,
-    etc. . The goal is use the transcription summary to know:
+    Summarize the transcription in chapters (similar how YouTube does in their videos), for each chapter identify:
     - Title: Meeting summary title.
     - Summary: Meeting summary description.
     - Topics: What is the mein topic and subtopics.
@@ -28,8 +26,8 @@ class SummarizeMLTranscriptionTemplate(PromptTemplateFactory):
     - Challenges. If any, How they solved them?
     Transcription text: {transcription}
     
-    Only return the summary with the items defined above, nothing else.
-    Return the format as a markdown, where 'Title' is the main title and the rest of items are subtitles.
+    Only return the summary with the items defined above for each chapter, nothing else.
+    Return the result as a markdown, where 'Title' is the main title and the rest of items are subtitles for each chapter.
     """
 
     def create_template(self) -> PromptTemplate:

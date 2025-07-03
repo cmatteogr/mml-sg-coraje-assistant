@@ -9,22 +9,22 @@ def feature_engineering() -> list[str]:
     raw_ml_book_documents_names = []
 
     raw_transcription_documents = TranscriptionDocument.bulk_find()
-    #raw_transcription_documents_names = list(map(lambda x: x.name, raw_transcription_documents))
-    raw_transcription_documents_names = []
+    raw_transcription_documents_names = list(map(lambda x: x.name, raw_transcription_documents))
+    #raw_transcription_documents_names = []
 
     raw_github_code_documents = GithubCodeDocument.bulk_find()
     # raw_github_code_documents_names = list(map(lambda x: x.name, raw_github_code_documents))
     raw_github_code_documents_names=[]
 
     raw_mml_sg_base_documents = MMLSGBaseDocument.bulk_find()
-    raw_mml_sg_base_documents_names = list(map(lambda x: x.name, raw_mml_sg_base_documents))
+    #raw_mml_sg_base_documents_names = list(map(lambda x: x.name, raw_mml_sg_base_documents))
+    raw_mml_sg_base_documents_names = []
 
 
     raw_documents = fe_steps.query_data_warehouse(raw_ml_book_documents_names,
                                                   raw_transcription_documents_names,
                                                   raw_github_code_documents_names,
                                                   raw_mml_sg_base_documents_names)
-
     # translate documents
     # NOTE: Only needed for the Transcriptions
     # translated_documents = fe_steps.translate_documents(raw_documents)
